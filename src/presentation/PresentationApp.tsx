@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Maximize2, Minimize2, Globe } from "lucide-react";
 import { PresentationLangProvider, usePresentationLanguage } from "./hooks/usePresentationLanguage";
-import WelcomeSlide from "./slides/WelcomeSlide";
 import OperationalSequenceSlide from "./slides/OperationalSequenceSlide";
 import LoanConfigSlide from "./slides/LoanConfigSlide";
 import CuentasSlide from "./slides/CuentasSlide";
@@ -42,7 +41,7 @@ function getExit(dir: Direction) {
   return "exitZoomIn";
 }
 
-const TOTAL_SLIDES = 11;
+const TOTAL_SLIDES = 10;
 
 function PresentationInner({ onClose }: { onClose: () => void }) {
   const [current, setCurrent] = useState(0);
@@ -94,7 +93,6 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
 
   const slides = [
     <CoreBancarioSlide key="core" />,
-    <WelcomeSlide key="welcome" />,
     <OperationalSequenceSlide key="operacional" />,
     <LoanConfigSlide key="loanconfig" />,
     <CuentasSlide key="cuentas" />,
