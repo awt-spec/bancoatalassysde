@@ -4,7 +4,6 @@ import About from "@/components/About";
 import Solutions from "@/components/Solutions";
 import SAFPlusMap from "@/components/SAFPlusMap";
 import Clients from "@/components/Clients";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -14,10 +13,9 @@ const Index = () => {
       <main>
         <Hero />
         <About />
+        <Clients />
         <Solutions />
         <SAFPlusMap />
-        <Clients />
-        <Contact />
       </main>
       <Footer />
     </div>
@@ -25,3 +23,4 @@ const Index = () => {
 };
 
 export default Index;
+
