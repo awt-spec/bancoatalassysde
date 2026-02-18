@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import sysdeLogo from "@/assets/sysde-logo.png";
-import bancoAtlasLogo from "@/assets/banco-atlas-logo.png";
-import inventiva from "@/assets/inventiva-logo.png";
+import bancoAtlasLogo from "@/assets/banco-atlas-logo-new.png";
+import inventiva from "@/assets/inventiva-logo-new.png";
+import sysdeLogo from "@/assets/sysde-logo-new.png";
 
 const Hero = () => {
   const { t, language } = useLanguage();
@@ -42,35 +42,45 @@ const Hero = () => {
           </p>
 
           {/* Logos */}
-          <div className="flex items-center justify-center gap-6 animate-fade-in [animation-delay:300ms] opacity-0">
+          <div className="flex items-center justify-center gap-4 animate-fade-in [animation-delay:300ms] opacity-0">
             {/* Banco Atlas */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-14 py-8 border border-primary-foreground/20">
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
               <img
                 src={bancoAtlasLogo}
                 alt="Banco Atlas"
-                className="h-32 object-contain brightness-0 invert"
+                className="h-28 w-44 object-contain brightness-0 invert"
               />
             </div>
 
             {/* Divider */}
             <div className="flex items-center gap-2">
-              <div className="w-6 h-px bg-primary-foreground/30" />
+              <div className="w-4 h-px bg-primary-foreground/30" />
               <span className="text-primary-foreground/40 text-3xl font-light">×</span>
-              <div className="w-6 h-px bg-primary-foreground/30" />
+              <div className="w-4 h-px bg-primary-foreground/30" />
             </div>
 
-            {/* SYSDE + Inventiva */}
-            <div className="flex items-center gap-6 bg-white/10 backdrop-blur-sm rounded-3xl px-14 py-8 border border-primary-foreground/20">
+            {/* SYSDE */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
               <img
                 src={sysdeLogo}
                 alt="SYSDE"
-                className="h-24 object-contain brightness-0 invert"
+                className="h-28 w-44 object-contain brightness-0 invert"
               />
-              <div className="w-px h-20 bg-primary-foreground/30" />
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-px bg-primary-foreground/30" />
+              <span className="text-primary-foreground/40 text-3xl font-light">×</span>
+              <div className="w-4 h-px bg-primary-foreground/30" />
+            </div>
+
+            {/* Inventiva */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
               <img
                 src={inventiva}
                 alt="Inventiva"
-                className="h-20 object-contain brightness-0 invert"
+                className="h-28 w-44 object-contain brightness-0 invert"
               />
             </div>
           </div>
