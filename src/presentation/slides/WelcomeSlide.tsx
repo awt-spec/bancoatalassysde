@@ -58,22 +58,22 @@ const WelcomeSlide = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, type: "spring" }}
-        className="flex items-center gap-4"
+        className="flex items-center gap-6"
       >
         {logos.map((logo, i) => (
-          <div key={logo.alt} className="flex items-center gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-7 border border-white/20">
+          <div key={logo.alt} className="flex items-center gap-6">
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-8 py-6 border border-white/20">
               <img
                 src={logo.src}
                 alt={logo.alt}
-                className="h-20 w-36 object-contain brightness-0 invert"
+                className="h-16 w-32 object-contain brightness-0 invert"
               />
             </div>
             {i < logos.length - 1 && (
               <div className="flex items-center gap-2">
-                <div className="w-4 h-px bg-white/30" />
-                <span className="text-white/40 text-2xl font-light">×</span>
-                <div className="w-4 h-px bg-white/30" />
+                <div className="w-3 h-px bg-white/30" />
+                <span className="text-white/40 text-xl font-light">×</span>
+                <div className="w-3 h-px bg-white/30" />
               </div>
             )}
           </div>
