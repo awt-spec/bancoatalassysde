@@ -1,6 +1,9 @@
 import { ArrowRight, Globe, Users, Zap, Settings, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import sysdeLogo from "@/assets/sysde-logo.png";
+import bancoAtlasLogo from "@/assets/banco-atlas-logo.png";
+import inventiva from "@/assets/inventiva-logo.png";
 
 const Hero = () => {
   const { t, language } = useLanguage();
@@ -21,19 +24,56 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 relative z-10 py-32">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Tagline */}
-          <div className="inline-flex items-center gap-2 bg-primary-foreground/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8 animate-fade-in">
-            <span className="w-2 h-2 bg-primary-foreground rounded-full animate-pulse" />
-            <span className="text-primary-foreground/90 text-sm font-medium">
-              {t("hero.badge")}
-            </span>
+
+          {/* Presented by / Proposal logos */}
+          <div className="flex items-center justify-center gap-6 mb-10 animate-fade-in">
+            {/* Banco Atlas - client */}
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-primary-foreground/50 text-xs uppercase tracking-widest">
+                {language === "es" ? "Para" : language === "en" ? "For" : "Pour"}
+              </span>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-primary-foreground/20">
+                <img
+                  src={bancoAtlasLogo}
+                  alt="Banco Atlas"
+                  className="h-10 object-contain brightness-0 invert"
+                />
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-px h-6 bg-primary-foreground/30" />
+              <span className="text-primary-foreground/50 text-xs">×</span>
+              <div className="w-px h-6 bg-primary-foreground/30" />
+            </div>
+
+            {/* SYSDE + Inventiva - proposers */}
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-primary-foreground/50 text-xs uppercase tracking-widest">
+                {language === "es" ? "Propuesta de" : language === "en" ? "Proposal by" : "Proposition de"}
+              </span>
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-primary-foreground/20">
+                <img
+                  src={sysdeLogo}
+                  alt="SYSDE"
+                  className="h-8 object-contain brightness-0 invert"
+                />
+                <div className="w-px h-6 bg-primary-foreground/30" />
+                <img
+                  src={inventiva}
+                  alt="Inventiva"
+                  className="h-7 object-contain brightness-0 invert"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Main Headline */}
           <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-primary-foreground leading-tight mb-6 animate-fade-in [animation-delay:100ms] opacity-0">
-            {t("hero.title1")}{" "}
+            Core Banking{" "}
             <span className="relative">
-              <span className="relative z-10">{t("hero.title2")}</span>
+              <span className="relative z-10">para Banco Atlas</span>
               <span className="absolute bottom-2 left-0 right-0 h-3 bg-primary-foreground/20 -z-0" />
             </span>
           </h1>
