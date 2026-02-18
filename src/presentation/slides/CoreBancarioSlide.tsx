@@ -10,8 +10,8 @@ const planets = [
     es: "33+ años\nde experiencia",
     en: "33+ years\nof experience",
     color: "#f43f5e",
-    size: 80,
-    orbit: 130,
+    size: 60,
+    orbit: 90,
     speed: 18,
     detail: {
       es: ["Fundada en 1990", "Pioneros en core bancario latinoamericano", "Evolución continua con la tecnología"],
@@ -24,8 +24,8 @@ const planets = [
     es: "34+\npaíses",
     en: "34+\ncountries",
     color: "#3b82f6",
-    size: 70,
-    orbit: 200,
+    size: 55,
+    orbit: 150,
     speed: 28,
     detail: {
       es: ["América Latina y el Caribe", "Presencia activa en Paraguay", "Red de socios locales"],
@@ -38,8 +38,8 @@ const planets = [
     es: "1000+\nclientes",
     en: "1000+\nclients",
     color: "#10b981",
-    size: 75,
-    orbit: 275,
+    size: 58,
+    orbit: 210,
     speed: 38,
     detail: {
       es: ["Bancos, financieras y cooperativas", "Instituciones de microfinanzas", "Clientes activos y satisfechos"],
@@ -52,8 +52,8 @@ const planets = [
     es: "100% web\nmulti-tenant",
     en: "100% web\nmulti-tenant",
     color: "#8b5cf6",
-    size: 65,
-    orbit: 340,
+    size: 52,
+    orbit: 265,
     speed: 50,
     detail: {
       es: ["Acceso desde cualquier dispositivo", "Arquitectura cloud-native", "Sin instalaciones locales"],
@@ -66,8 +66,8 @@ const planets = [
     es: "6-12 meses\nimplementación",
     en: "6-12 months\nimplementation",
     color: "#f59e0b",
-    size: 60,
-    orbit: 400,
+    size: 48,
+    orbit: 315,
     speed: 65,
     detail: {
       es: ["Metodología ágil probada", "Equipo dedicado en sitio", "Acompañamiento post-lanzamiento"],
@@ -111,7 +111,7 @@ const CoreBancarioSlide = () => {
       </motion.div>
 
       {/* Solar system */}
-      <div className="relative flex items-center justify-center" style={{ width: 900, height: 900 }}>
+      <div className="relative flex items-center justify-center" style={{ width: 700, height: 700 }}>
         {/* Orbit rings */}
         {planets.map((p) => (
           <div
@@ -146,56 +146,61 @@ const CoreBancarioSlide = () => {
           <span className="text-white text-[10px] font-black mt-1">SYSDE</span>
         </motion.div>
 
-        {/* Planets */}
-        {planets.map((planet, i) => (
-          <motion.div
-            key={planet.id}
-            className="absolute"
-            style={{
-              width: planet.orbit * 2,
-              height: planet.orbit * 2,
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: planet.speed, repeat: Infinity, ease: "linear" }}
-          >
-            {/* Planet positioned at top of orbit */}
+        {/* Planets — using CSS custom animation via translateX/Y keyframes */}
+        {planets.map((planet, i) => {
+          const startAngleDeg = (i * 360) / planets.length - 90;
+          const startAngleRad = (startAngleDeg * Math.PI) / 180;
+          const cx = 350;
+          const cy = 350;
+          const r = planet.orbit;
+
+          const kf = [
+            { tx: r * Math.cos(startAngleRad), ty: r * Math.sin(startAngleRad) },
+            { tx: r * Math.cos(startAngleRad + Math.PI * 0.5), ty: r * Math.sin(startAngleRad + Math.PI * 0.5) },
+            { tx: r * Math.cos(startAngleRad + Math.PI), ty: r * Math.sin(startAngleRad + Math.PI) },
+            { tx: r * Math.cos(startAngleRad + Math.PI * 1.5), ty: r * Math.sin(startAngleRad + Math.PI * 1.5) },
+            { tx: r * Math.cos(startAngleRad + Math.PI * 2), ty: r * Math.sin(startAngleRad + Math.PI * 2) },
+          ];
+
+          return (
             <motion.button
-              className="absolute -translate-x-1/2"
-              style={{ top: 0, left: "50%" }}
-              animate={{ rotate: -360 }}
-              transition={{ duration: planet.speed, repeat: Infinity, ease: "linear" }}
+              key={planet.id}
+              className="absolute flex flex-col items-center"
+              style={{ left: cx, top: cy, x: "-50%", y: "-50%", translateX: kf[0].tx, translateY: kf[0].ty }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                translateX: kf.map(k => k.tx),
+                translateY: kf.map(k => k.ty),
+              }}
+              transition={{
+                opacity: { delay: 0.4 + i * 0.15, duration: 0.5 },
+                scale: { delay: 0.4 + i * 0.15, duration: 0.5 },
+                translateX: { duration: planet.speed, repeat: Infinity, ease: "linear", delay: 0.5 + i * 0.15 },
+                translateY: { duration: planet.speed, repeat: Infinity, ease: "linear", delay: 0.5 + i * 0.15 },
+              }}
               whileHover={{ scale: 1.2 }}
               onClick={() => setSelected(selected === planet.id ? null : planet.id)}
-              initial={{ opacity: 0, scale: 0 }}
             >
-              <motion.div
-                animate={{ opacity: 1, scale: 1 }}
-                initial={{ opacity: 0, scale: 0 }}
-                transition={{ delay: 0.4 + i * 0.15 }}
-                className="relative flex flex-col items-center"
+              <div
+                className="rounded-full flex items-center justify-center shadow-lg cursor-pointer border-2 transition-all"
+                style={{
+                  width: planet.size,
+                  height: planet.size,
+                  background: `radial-gradient(circle at 35% 35%, ${planet.color}cc, ${planet.color}66)`,
+                  borderColor: selected === planet.id ? "white" : `${planet.color}88`,
+                  boxShadow: selected === planet.id ? `0 0 20px 6px ${planet.color}66` : `0 0 12px 2px ${planet.color}33`,
+                }}
               >
-                <div
-                  className="rounded-full flex items-center justify-center shadow-lg cursor-pointer border-2 transition-all"
-                  style={{
-                    width: planet.size,
-                    height: planet.size,
-                    background: `radial-gradient(circle at 35% 35%, ${planet.color}cc, ${planet.color}66)`,
-                    borderColor: selected === planet.id ? "white" : `${planet.color}88`,
-                    boxShadow: selected === planet.id ? `0 0 20px 6px ${planet.color}66` : `0 0 12px 2px ${planet.color}33`,
-                  }}
-                >
-                  <span style={{ fontSize: planet.size * 0.4 }}>{planet.emoji}</span>
-                </div>
-                <span className="text-white/80 text-[10px] font-medium text-center leading-tight whitespace-pre-line mt-1.5 max-w-[90px]">
-                  {t(planet.es, planet.en)}
-                </span>
-              </motion.div>
+                <span style={{ fontSize: planet.size * 0.4 }}>{planet.emoji}</span>
+              </div>
+              <span className="text-white/80 text-[10px] font-medium text-center leading-tight whitespace-pre-line mt-1.5 max-w-[90px]">
+                {t(planet.es, planet.en)}
+              </span>
             </motion.button>
-          </motion.div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Detail panel */}
