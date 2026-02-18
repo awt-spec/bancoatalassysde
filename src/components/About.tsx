@@ -41,21 +41,7 @@ const About = () => {
     <section id="nosotros" className="py-24 bg-muted/50">
       <div className="container mx-auto px-4">
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-20">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className={`flex flex-col items-center p-4 md:p-6 rounded-2xl bg-primary text-primary-foreground border border-primary/20 shadow-sm ${index === 4 ? 'col-span-2 lg:col-span-1' : ''}`}
-            >
-              <stat.icon className="h-6 w-6 md:h-8 md:w-8 text-primary-foreground/80 mb-2" />
-              <span className="text-2xl md:text-3xl font-heading font-bold">{stat.value}</span>
-              <span className="text-primary-foreground/70 text-xs md:text-sm mt-1 text-center">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
           {/* Left Content */}
           <div>
             <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">
@@ -103,6 +89,21 @@ const About = () => {
             ))}
           </div>
         </div>
+
+        {/* Stats Row — below content */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className={`flex flex-col items-center p-4 md:p-6 rounded-2xl bg-primary text-primary-foreground border border-primary/20 shadow-sm ${index === 4 ? 'col-span-2 lg:col-span-1' : ''}`}
+            >
+              <stat.icon className="h-6 w-6 md:h-8 md:w-8 text-primary-foreground/80 mb-2" />
+              <span className="text-2xl md:text-3xl font-heading font-bold">{stat.value}</span>
+              <span className="text-primary-foreground/70 text-xs md:text-sm mt-1 text-center">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );
