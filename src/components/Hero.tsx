@@ -46,36 +46,36 @@ const Hero = () => {
 
             {/* Banco Atlas — "para" */}
             <div className="flex flex-col items-center gap-3">
-              <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">para</span>
+              <span className="text-primary-foreground/50 text-[14px] font-bold uppercase tracking-[0.25em]">para</span>
               <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center p-2">
                 <img
                   src={bancoAtlasLogo}
                   alt="Banco Atlas"
-                  className="w-full h-full object-contain brightness-0 invert scale-[1.8]"
+                  className="w-full h-full object-contain brightness-0 invert scale-[1.6]"
                 />
               </div>
             </div>
 
             {/* Separator dot */}
-            <div className="mt-7 text-primary-foreground/30 text-xl font-light">·</div>
+            <div className="mt-7 text-primary-foreground/40 text-3xl font-light">·</div>
 
             {/* SYSDE + Inventiva — grouped under "de" */}
             <div className="flex flex-col items-center gap-3">
-              <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">de</span>
+              <span className="text-primary-foreground/50 text-[14px] font-bold uppercase tracking-[0.25em]">de</span>
               <div className="flex items-center gap-3">
                 <div className="w-[260px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center p-2">
                   <img
                     src={sysdeLogo}
                     alt="SYSDE"
-                    className="w-full h-full object-contain brightness-0 invert scale-[1.8]"
+                    className="w-full h-full object-contain brightness-0 invert scale-[1.6]"
                   />
                 </div>
-                <div className="w-px h-10 bg-primary-foreground/25" />
+                <div className="w-[2px] h-16 bg-primary-foreground/30" />
                 <div className="w-[260px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center p-2">
                   <img
                     src={inventiva}
                     alt="Inventiva"
-                    className="w-full h-full object-contain brightness-0 invert scale-[1.8]"
+                    className="w-full h-full object-contain brightness-0 invert scale-[1.6]"
                   />
                 </div>
               </div>

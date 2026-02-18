@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Zap, Users, Wallet, CreditCard, Smartphone, Send, Settings,
-  ZoomIn, ArrowLeft, RotateCcw, Link2, Package, Cog, ClipboardList,
+  Zap, Users, Wallet, CreditCard, Send, Settings,
+  ZoomIn, ArrowLeft, RotateCcw, Link2, ClipboardList,
   DollarSign, RefreshCw, ChevronRight, Search,
 } from "lucide-react";
 
@@ -24,10 +24,6 @@ const modules = [
   { id: "originacion",  icon: Zap,        label: "Originación",          color: "dark" as const },
   { id: "clientes",     icon: Users,       label: "Gestión de Clientes",  color: "red"  as const },
   { id: "prestamos",    icon: Wallet,      label: "Préstamos",            color: "dark" as const },
-  { id: "capital",      icon: CreditCard,  label: "Capital de Trabajo",   color: "red"  as const },
-  { id: "movil",        icon: Smartphone,  label: "App Móvil",            color: "dark" as const },
-  { id: "transferencias", icon: Send,      label: "Transferencias",       color: "red"  as const },
-  { id: "procesos",     icon: Settings,    label: "Procesos",             color: "dark" as const },
 ];
 
 // Cliente 360 sub-items
@@ -537,35 +533,19 @@ const OperationalSequenceSlide = () => {
             <h2 className="text-4xl font-black text-foreground">Secuencia Operacional</h2>
           </div>
 
-          {/* 2-row grid */}
-          <div className="grid grid-cols-4 gap-4 mb-4">
-            {modules.slice(0, 4).map((mod) => {
+          {/* 3-module centered grid */}
+          <div className="flex justify-center gap-6">
+            {modules.map((mod) => {
               const Icon = mod.icon;
               return (
                 <button
                   key={mod.id}
                   onClick={() => handleModuleClick(mod.id)}
-                  className={`relative rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-[4/3] shadow-lg transition-all hover:scale-105 hover:shadow-xl group ${cardBg(mod.color)}`}
+                  className={`relative rounded-3xl p-8 flex flex-col items-center justify-center gap-3 w-52 aspect-[4/3] shadow-lg transition-all hover:scale-105 hover:shadow-xl group ${cardBg(mod.color)}`}
                 >
                   <ZoomIn className="absolute top-3 right-3 w-5 h-5 opacity-40 group-hover:opacity-70" />
-                  <Icon className="w-10 h-10" />
-                  <span className="font-bold text-sm text-center">{mod.label}</span>
-                </button>
-              );
-            })}
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            {modules.slice(4).map((mod) => {
-              const Icon = mod.icon;
-              return (
-                <button
-                  key={mod.id}
-                  onClick={() => handleModuleClick(mod.id)}
-                  className={`relative rounded-3xl p-6 flex flex-col items-center justify-center gap-3 aspect-[4/3] shadow-lg transition-all hover:scale-105 hover:shadow-xl group ${cardBg(mod.color)}`}
-                >
-                  <ZoomIn className="absolute top-3 right-3 w-5 h-5 opacity-40 group-hover:opacity-70" />
-                  <Icon className="w-10 h-10" />
-                  <span className="font-bold text-sm text-center">{mod.label}</span>
+                  <Icon className="w-12 h-12" />
+                  <span className="font-bold text-base text-center">{mod.label}</span>
                 </button>
               );
             })}
@@ -618,38 +598,8 @@ const OperationalSequenceSlide = () => {
       );
     }
 
-    // Generic module: App Móvil, Transferencias, Procesos, Capital
-    const mod = modules.find(m => m.id === activeModule)!;
-    const Icon = mod.icon;
-    const genericContent: Record<string, string[]> = {
-      capital: ["Líneas revolventes de crédito", "Amortización flexible", "Control de disposiciones", "Garantías y avales", "Tasas diferenciadas por segmento"],
-      movil: ["Consulta de saldos en tiempo real", "Pagos QR / NFC", "Estado de cuenta digital", "Notificaciones push", "Autenticación biométrica", "Autoservicio 24/7"],
-      transferencias: ["Transferencias nacionales (ACH)", "Transferencias internacionales (SWIFT)", "Lotes masivos de pago", "Conciliación automática", "Historial completo"],
-      procesos: ["Devengamiento diario de intereses", "Control días de atraso — Cálculo moratorios", "Calificación de comportamientos", "Reclasificación de carteras", "Control de cobro Judicial", "Cierre contable automático"],
-    };
-
-    return wrapWithBack(
-      <div className="flex flex-col items-center gap-4 w-full max-w-2xl px-4">
-        <div className="flex items-center gap-3">
-          <div className={`flex items-center gap-2 rounded-full px-5 py-2.5 font-bold text-sm ${cardBg(mod.color)}`}>
-            <Icon className="w-4 h-4" /> {mod.label}
-          </div>
-          <button onClick={handleBack} className="flex items-center gap-1.5 border border-border rounded-full px-4 py-2 text-sm text-foreground hover:border-primary/50 transition-colors">
-            <RotateCcw className="w-3.5 h-3.5 text-primary" /> Vista general
-          </button>
-        </div>
-        <div className="flex flex-col gap-2 w-full mt-4">
-          {(genericContent[activeModule] || []).map((item, i) => (
-            <div key={i} className={`flex items-center gap-3 rounded-2xl px-5 py-3.5 text-sm font-medium ${stepBg(i)}`}>
-              <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${stepNumColor(i)}`}>
-                {i + 1}
-              </span>
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
+    // Fallback (should not happen with 3 modules)
+    return null;
   };
 
   return (
