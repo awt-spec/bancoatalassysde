@@ -41,22 +41,22 @@ const Hero = () => {
              "Conçu pour évoluer — Nous nous adaptons à votre opération"}
           </p>
 
-          {/* Logos — x2 bigger */}
-          <div className="flex items-center justify-center gap-12 animate-fade-in [animation-delay:300ms] opacity-0">
+          {/* Logos */}
+          <div className="flex items-center justify-center gap-6 animate-fade-in [animation-delay:300ms] opacity-0">
             {/* Banco Atlas */}
             <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-14 py-8 border border-primary-foreground/20">
               <img
                 src={bancoAtlasLogo}
                 alt="Banco Atlas"
-                className="h-24 object-contain brightness-0 invert"
+                className="h-32 object-contain brightness-0 invert"
               />
             </div>
 
             {/* Divider */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-px bg-primary-foreground/30" />
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-px bg-primary-foreground/30" />
               <span className="text-primary-foreground/40 text-3xl font-light">×</span>
-              <div className="w-12 h-px bg-primary-foreground/30" />
+              <div className="w-6 h-px bg-primary-foreground/30" />
             </div>
 
             {/* SYSDE + Inventiva */}
@@ -64,13 +64,13 @@ const Hero = () => {
               <img
                 src={sysdeLogo}
                 alt="SYSDE"
-                className="h-20 object-contain brightness-0 invert"
+                className="h-24 object-contain brightness-0 invert"
               />
-              <div className="w-px h-16 bg-primary-foreground/30" />
+              <div className="w-px h-20 bg-primary-foreground/30" />
               <img
                 src={inventiva}
                 alt="Inventiva"
-                className="h-16 object-contain brightness-0 invert"
+                className="h-20 object-contain brightness-0 invert"
               />
             </div>
           </div>
