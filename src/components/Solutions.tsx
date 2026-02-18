@@ -1,12 +1,10 @@
-import { CreditCard, Building, Wallet, PiggyBank, ArrowRight, ChevronDown, Check } from "lucide-react";
+import { CreditCard, Building, Wallet, PiggyBank, ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const Solutions = () => {
   const { t, language } = useLanguage();
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   const solutions = [
     {
@@ -86,10 +84,6 @@ const Solutions = () => {
     t("solutions.cat4"),
   ];
 
-  const handleToggle = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
-  };
-
   return (
     <section id="soluciones" className="py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -107,122 +101,71 @@ const Solutions = () => {
           </p>
         </div>
 
-        {/* Accordion Solutions */}
-        <div className="max-w-4xl mx-auto space-y-4">
+        {/* Vertical Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {solutions.map((solution, index) => {
-            const isExpanded = expandedIndex === index;
             const Icon = solution.icon;
-            
             return (
               <div
                 key={index}
-                className={cn(
-                  "relative overflow-hidden rounded-2xl bg-card border transition-all duration-300",
-                  isExpanded 
-                    ? "border-primary/50 shadow-lg shadow-primary/10" 
-                    : "border-border hover:border-primary/30"
-                )}
+                className="group relative flex flex-col rounded-2xl bg-card border border-border hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 overflow-hidden"
               >
-                {/* Gradient Accent */}
-                <div 
-                  className={cn(
-                    "absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b transition-opacity duration-300",
-                    solution.color,
-                    isExpanded ? "opacity-100" : "opacity-0"
-                  )} 
-                />
-                
-                {/* Header - Always visible */}
-                <button
-                  onClick={() => handleToggle(index)}
-                  className="w-full p-6 flex items-center gap-4 text-left hover:bg-muted/30 transition-colors"
-                >
+                {/* Gradient top bar */}
+                <div className={cn("h-1.5 w-full bg-gradient-to-r", solution.color)} />
+
+                {/* Card body */}
+                <div className="flex flex-col flex-1 p-6">
                   {/* Icon */}
-                  <div 
+                  <div
                     className={cn(
-                      "flex-shrink-0 p-3 rounded-xl bg-gradient-to-br text-primary-foreground transition-transform duration-300",
-                      solution.color,
-                      isExpanded && "scale-110"
+                      "w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center text-primary-foreground mb-5 transition-transform duration-300 group-hover:scale-110",
+                      solution.color
                     )}
                   >
                     <Icon className="h-6 w-6" />
                   </div>
 
-                  {/* Title & Short Description */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-heading text-xl font-bold text-foreground mb-1">
-                      {solution.name}
-                    </h3>
-                    <p className="text-muted-foreground text-sm line-clamp-1">
-                      {solution.description}
-                    </p>
-                  </div>
+                  {/* Title */}
+                  <h3 className="font-heading text-xl font-bold text-foreground mb-2">
+                    {solution.name}
+                  </h3>
 
-                  {/* Expand Icon */}
-                  <ChevronDown 
-                    className={cn(
-                      "h-5 w-5 text-muted-foreground transition-transform duration-300 flex-shrink-0",
-                      isExpanded && "rotate-180 text-primary"
-                    )}
-                  />
-                </button>
+                  {/* Short description */}
+                  <p className="text-muted-foreground text-sm mb-5 flex-1">
+                    {solution.details}
+                  </p>
 
-                {/* Expanded Content */}
-                <div 
-                  className={cn(
-                    "grid transition-all duration-300 ease-in-out",
-                    isExpanded 
-                      ? "grid-rows-[1fr] opacity-100" 
-                      : "grid-rows-[0fr] opacity-0"
+                  {/* Features */}
+                  <ul className="space-y-2 mb-6">
+                    {solution.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="text-sm text-foreground font-medium">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  {solution.link ? (
+                    <a href={solution.link} target="_blank" rel="noopener noreferrer">
+                      <Button
+                        size="sm"
+                        className="w-full group/btn bg-gradient-to-r from-primary to-sysde-dark-red hover:opacity-90 text-primary-foreground"
+                      >
+                        {t("solutions.cta")}
+                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                      </Button>
+                    </a>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full group/btn border-primary/30 text-primary hover:bg-primary/5"
+                    >
+                      {t("solutions.cta")}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                    </Button>
                   )}
-                >
-                  <div className="overflow-hidden">
-                    <div className="px-6 pb-6 pt-2 border-t border-border/50">
-                      {/* Description */}
-                      <p className="text-muted-foreground mb-6">
-                        {solution.details}
-                      </p>
-
-                      {/* Features */}
-                      <div className="grid sm:grid-cols-3 gap-3 mb-6">
-                        {solution.features.map((feature, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center gap-2 p-3 rounded-lg bg-muted/50"
-                          >
-                            <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                            <span className="text-sm text-foreground font-medium">
-                              {feature}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* CTA */}
-                      {solution.link ? (
-                        <a
-                          href={solution.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Button
-                            className="group/btn bg-gradient-to-r from-primary to-sysde-dark-red hover:opacity-90 text-primary-foreground"
-                          >
-                            {t("solutions.cta")}
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                          </Button>
-                        </a>
-                      ) : (
-                        <Button
-                          variant="outline"
-                          className="group/btn border-primary/30 text-primary hover:bg-primary/5"
-                        >
-                          {t("solutions.cta")}
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
                 </div>
               </div>
             );
