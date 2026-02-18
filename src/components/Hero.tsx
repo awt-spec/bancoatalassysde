@@ -42,51 +42,47 @@ const Hero = () => {
           </p>
 
           {/* Logos */}
-          <div className="flex items-center justify-center gap-0 animate-fade-in [animation-delay:300ms] opacity-0">
+          <div className="flex items-center justify-center gap-6 animate-fade-in [animation-delay:300ms] opacity-0">
 
-            {/* Banco Atlas */}
+            {/* Banco Atlas — "para" */}
             <div className="flex flex-col items-center gap-3">
               <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">para</span>
-              <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center">
+              <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center p-4">
                 <img
                   src={bancoAtlasLogo}
                   alt="Banco Atlas"
-                  className="h-16 w-48 object-contain brightness-0 invert"
+                  className="w-full h-full object-contain brightness-0 invert"
                 />
               </div>
             </div>
 
             {/* Separator dot */}
-            <div className="flex flex-col items-center justify-center w-16 mt-6">
-              <span className="text-primary-foreground/30 text-lg">·</span>
-            </div>
+            <div className="mt-7 text-primary-foreground/30 text-xl font-light">·</div>
 
-            {/* SYSDE */}
+            {/* SYSDE + Inventiva — grouped under "de" */}
             <div className="flex flex-col items-center gap-3">
               <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">de</span>
-              <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center">
-                <img
-                  src={sysdeLogo}
-                  alt="SYSDE"
-                  className="h-16 w-48 object-contain brightness-0 invert"
-                />
-              </div>
-            </div>
+              <div className="flex items-center gap-3">
+                {/* SYSDE */}
+                <div className="w-[260px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center p-4">
+                  <img
+                    src={sysdeLogo}
+                    alt="SYSDE"
+                    className="w-full h-full object-contain brightness-0 invert"
+                  />
+                </div>
 
-            {/* Separator vertical line */}
-            <div className="flex flex-col items-center justify-center w-16 mt-6">
-              <div className="w-px h-10 bg-primary-foreground/25" />
-            </div>
+                {/* Separator | */}
+                <div className="w-px h-10 bg-primary-foreground/25" />
 
-            {/* Inventiva */}
-            <div className="flex flex-col items-center gap-3">
-              <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">e</span>
-              <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center">
-                <img
-                  src={inventiva}
-                  alt="Inventiva"
-                  className="h-16 w-48 object-contain brightness-0 invert"
-                />
+                {/* Inventiva */}
+                <div className="w-[260px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center p-4">
+                  <img
+                    src={inventiva}
+                    alt="Inventiva"
+                    className="w-full h-full object-contain brightness-0 invert"
+                  />
+                </div>
               </div>
             </div>
 
