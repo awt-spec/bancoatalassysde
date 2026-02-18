@@ -93,6 +93,7 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
   };
 
   const slides = [
+    <CoreBancarioSlide key="core" />,
     <WelcomeSlide key="welcome" />,
     <OperationalSequenceSlide key="operacional" />,
     <LoanConfigSlide key="loanconfig" />,
@@ -103,7 +104,6 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
     <ReportingSlide key="reporting" />,
     <ComplianceSlide key="compliance" />,
     <APISlide key="api" />,
-    <CoreBancarioSlide key="core" />,
   ];
 
   return (
