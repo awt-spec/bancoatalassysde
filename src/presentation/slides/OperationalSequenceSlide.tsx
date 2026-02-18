@@ -603,7 +603,7 @@ const OperationalSequenceSlide = () => {
   };
 
   return (
-    <div className="w-full h-full bg-[#f5f5f7] flex flex-col items-center justify-start overflow-y-auto py-8 px-4">
+    <div className="w-full h-full bg-[#f5f5f7] flex flex-col items-center justify-center overflow-y-auto py-8 px-4">
       <AnimatePresence mode="wait">
         {renderContent()}
       </AnimatePresence>
