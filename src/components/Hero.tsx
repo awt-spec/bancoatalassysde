@@ -45,47 +45,58 @@ const Hero = () => {
           </p>
 
           {/* Logos */}
-          <div className="flex items-center justify-center gap-4 animate-fade-in [animation-delay:300ms] opacity-0">
-            {/* Banco Atlas */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
-              <img
-                src={bancoAtlasLogo}
-                alt="Banco Atlas"
-                className="h-28 w-44 object-contain brightness-0 invert"
-              />
+          <div className="flex items-end justify-center gap-6 animate-fade-in [animation-delay:300ms] opacity-0">
+
+            {/* Banco Atlas — "para" label */}
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-primary-foreground/50 text-xs font-semibold uppercase tracking-widest">para</span>
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
+                <img
+                  src={bancoAtlasLogo}
+                  alt="Banco Atlas"
+                  className="h-28 w-44 object-contain brightness-0 invert"
+                />
+              </div>
             </div>
 
             {/* Divider */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-4 h-px bg-primary-foreground/30" />
+              <span className="text-primary-foreground/40 text-3xl font-light">·</span>
+              <div className="w-4 h-px bg-primary-foreground/30" />
+            </div>
+
+            {/* SYSDE — "de" label */}
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-primary-foreground/50 text-xs font-semibold uppercase tracking-widest">de</span>
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
+                <img
+                  src={sysdeLogo}
+                  alt="SYSDE"
+                  className="h-28 w-44 object-contain brightness-0 invert"
+                />
+              </div>
+            </div>
+
+            {/* Divider × */}
+            <div className="flex items-center gap-2 mb-4">
               <div className="w-4 h-px bg-primary-foreground/30" />
               <span className="text-primary-foreground/40 text-3xl font-light">×</span>
               <div className="w-4 h-px bg-primary-foreground/30" />
             </div>
 
-            {/* SYSDE */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
-              <img
-                src={sysdeLogo}
-                alt="SYSDE"
-                className="h-28 w-44 object-contain brightness-0 invert"
-              />
+            {/* Inventiva — "e" label */}
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-primary-foreground/50 text-xs font-semibold uppercase tracking-widest">e</span>
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
+                <img
+                  src={inventiva}
+                  alt="Inventiva"
+                  className="h-28 w-44 object-contain brightness-0 invert"
+                />
+              </div>
             </div>
 
-            {/* Divider */}
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-px bg-primary-foreground/30" />
-              <span className="text-primary-foreground/40 text-3xl font-light">×</span>
-              <div className="w-4 h-px bg-primary-foreground/30" />
-            </div>
-
-            {/* Inventiva */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
-              <img
-                src={inventiva}
-                alt="Inventiva"
-                className="h-28 w-44 object-contain brightness-0 invert"
-              />
-            </div>
           </div>
 
           {/* Presentation CTA */}
