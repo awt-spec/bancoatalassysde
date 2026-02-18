@@ -1,5 +1,4 @@
-import { ArrowRight, Globe, Users, Zap, Settings, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Globe, Users, Zap, Settings, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import sysdeLogo from "@/assets/sysde-logo.png";
 import bancoAtlasLogo from "@/assets/banco-atlas-logo.png";
@@ -34,9 +33,8 @@ const Hero = () => {
 
           {/* Main Headline */}
           <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-primary-foreground leading-tight mb-6 animate-fade-in [animation-delay:100ms] opacity-0">
-            Core Bancario{" "}
             <span className="relative">
-              <span className="relative z-10">para Banco Atlas</span>
+              <span className="relative z-10">Core Bancario</span>
               <span className="absolute bottom-2 left-0 right-0 h-3 bg-primary-foreground/20 -z-0" />
             </span>
           </h1>
@@ -52,67 +50,38 @@ const Hero = () => {
              "Conçu pour évoluer — Nous nous adaptons à votre opération"}
           </p>
 
-          {/* Logos: Para / Propuesta de */}
-          <div className="flex items-center justify-center gap-6 mb-10 animate-fade-in [animation-delay:300ms] opacity-0">
-            {/* Banco Atlas - client */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-primary-foreground/50 text-xs uppercase tracking-widest">
-                {language === "es" ? "Para" : language === "en" ? "For" : "Pour"}
-              </span>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-primary-foreground/20">
-                <img
-                  src={bancoAtlasLogo}
-                  alt="Banco Atlas"
-                  className="h-10 object-contain brightness-0 invert"
-                />
-              </div>
+          {/* Logos */}
+          <div className="flex items-center justify-center gap-8 mb-14 animate-fade-in [animation-delay:300ms] opacity-0">
+            {/* Banco Atlas */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-5 border border-primary-foreground/20">
+              <img
+                src={bancoAtlasLogo}
+                alt="Banco Atlas"
+                className="h-14 object-contain brightness-0 invert"
+              />
             </div>
 
             {/* Divider */}
-            <div className="flex flex-col items-center gap-1">
-              <div className="w-px h-6 bg-primary-foreground/30" />
-              <span className="text-primary-foreground/50 text-xs">×</span>
-              <div className="w-px h-6 bg-primary-foreground/30" />
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-px bg-primary-foreground/30" />
+              <span className="text-primary-foreground/40 text-lg font-light">×</span>
+              <div className="w-8 h-px bg-primary-foreground/30" />
             </div>
 
-            {/* SYSDE + Inventiva - proposers */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-primary-foreground/50 text-xs uppercase tracking-widest">
-                {language === "es" ? "Propuesta de" : language === "en" ? "Proposal by" : "Proposition de"}
-              </span>
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-primary-foreground/20">
-                <img
-                  src={sysdeLogo}
-                  alt="SYSDE"
-                  className="h-8 object-contain brightness-0 invert"
-                />
-                <div className="w-px h-6 bg-primary-foreground/30" />
-                <img
-                  src={inventiva}
-                  alt="Inventiva"
-                  className="h-7 object-contain brightness-0 invert"
-                />
-              </div>
+            {/* SYSDE + Inventiva */}
+            <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-5 border border-primary-foreground/20">
+              <img
+                src={sysdeLogo}
+                alt="SYSDE"
+                className="h-12 object-contain brightness-0 invert"
+              />
+              <div className="w-px h-10 bg-primary-foreground/30" />
+              <img
+                src={inventiva}
+                alt="Inventiva"
+                className="h-10 object-contain brightness-0 invert"
+              />
             </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in [animation-delay:350ms] opacity-0">
-            <Button 
-              size="lg" 
-              variant="secondary"
-              className="group bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-semibold"
-            >
-              {t("hero.cta1")}
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-            >
-              {t("hero.cta2")}
-            </Button>
           </div>
 
           {/* Stats Row */}
