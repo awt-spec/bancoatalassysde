@@ -1,4 +1,3 @@
-import { Quote } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Import client logos
@@ -76,20 +75,6 @@ const clientsRow2 = [
 const Clients = () => {
   const { t, language } = useLanguage();
 
-  const testimonial = {
-    quote: language === "es" 
-      ? "SYSDE ha sido un socio estratégico clave en nuestra transformación digital. Su experiencia en el sector financiero y su capacidad de adaptación a nuestras necesidades específicas nos ha permitido mejorar significativamente nuestros procesos operativos."
-      : language === "en"
-      ? "SYSDE has been a key strategic partner in our digital transformation. Their experience in the financial sector and their ability to adapt to our specific needs has allowed us to significantly improve our operational processes."
-      : "SYSDE a été un partenaire stratégique clé dans notre transformation numérique. Leur expérience dans le secteur financier et leur capacité d'adaptation à nos besoins spécifiques nous ont permis d'améliorer significativement nos processus opérationnels.",
-    author: "Juan Rodríguez",
-    role: language === "es" 
-      ? "Director de Tecnología, Banco Regional"
-      : language === "en"
-      ? "Technology Director, Regional Bank"
-      : "Directeur de la Technologie, Banque Régionale",
-  };
-
   return (
     <section id="clientes" className="py-24 bg-primary overflow-hidden">
       <div className="container mx-auto px-4">
@@ -109,7 +94,7 @@ const Clients = () => {
         </div>
 
         {/* Client Logos - Two Marquee Rows */}
-        <div className="max-w-7xl mx-auto mb-20 space-y-8">
+        <div className="max-w-7xl mx-auto space-y-8">
           {/* Row 1 - Moving Right */}
           <div className="relative">
             <div className="flex w-max flex-nowrap items-center animate-marquee-right gap-12">
@@ -143,29 +128,6 @@ const Clients = () => {
                   />
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Testimonial */}
-        <div className="max-w-4xl mx-auto">
-          <div className="relative bg-primary-foreground/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-primary-foreground/20">
-            <Quote className="absolute top-6 left-6 h-12 w-12 text-primary-foreground/20" />
-            
-            <div className="relative z-10">
-              <p className="text-lg md:text-xl text-primary-foreground leading-relaxed mb-8 italic">
-                "{testimonial.quote}"
-              </p>
-              
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                  <span className="font-heading font-bold text-primary-foreground text-xl">JR</span>
-                </div>
-                <div>
-                  <p className="font-semibold text-primary-foreground">{testimonial.author}</p>
-                  <p className="text-sm text-primary-foreground/70">{testimonial.role}</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
