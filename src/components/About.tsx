@@ -1,8 +1,16 @@
-import { CheckCircle2, TrendingUp, Shield, Headphones } from "lucide-react";
+import { CheckCircle2, TrendingUp, Shield, Headphones, Globe, Users, Zap, Settings } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const About = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+
+  const stats = [
+    { icon: Globe, value: "34", label: language === "es" ? "Países" : language === "en" ? "Countries" : "Pays" },
+    { icon: Users, value: "1000+", label: language === "es" ? "Clientes" : language === "en" ? "Clients" : "Clients" },
+    { icon: Zap, value: "350M+", label: language === "es" ? "API calls/día" : language === "en" ? "API calls/day" : "Appels API/jour" },
+    { icon: Settings, value: "40K+", label: language === "es" ? "Configuraciones" : language === "en" ? "Configurations" : "Configurations" },
+    { icon: TrendingUp, value: "1500+", label: language === "es" ? "Proyectos" : language === "en" ? "Projects" : "Projets" },
+  ];
 
   const features = [
     {
@@ -32,6 +40,21 @@ const About = () => {
   return (
     <section id="nosotros" className="py-24 bg-muted/50">
       <div className="container mx-auto px-4">
+
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-20">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className={`flex flex-col items-center p-4 md:p-6 rounded-2xl bg-primary text-primary-foreground border border-primary/20 shadow-sm ${index === 4 ? 'col-span-2 lg:col-span-1' : ''}`}
+            >
+              <stat.icon className="h-6 w-6 md:h-8 md:w-8 text-primary-foreground/80 mb-2" />
+              <span className="text-2xl md:text-3xl font-heading font-bold">{stat.value}</span>
+              <span className="text-primary-foreground/70 text-xs md:text-sm mt-1 text-center">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div>

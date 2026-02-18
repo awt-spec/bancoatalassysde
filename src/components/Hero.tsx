@@ -1,4 +1,3 @@
-import { Globe, Users, Zap, Settings, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import sysdeLogo from "@/assets/sysde-logo.png";
 import bancoAtlasLogo from "@/assets/banco-atlas-logo.png";
@@ -6,14 +5,6 @@ import inventiva from "@/assets/inventiva-logo.png";
 
 const Hero = () => {
   const { t, language } = useLanguage();
-
-  const stats = [
-    { icon: Globe, value: "34", label: language === "es" ? "Países" : language === "en" ? "Countries" : "Pays" },
-    { icon: Users, value: "1000+", label: language === "es" ? "Clientes" : language === "en" ? "Clients" : "Clients" },
-    { icon: Zap, value: "350M+", label: language === "es" ? "API calls/día" : language === "en" ? "API calls/day" : "Appels API/jour" },
-    { icon: Settings, value: "40K+", label: language === "es" ? "Configuraciones" : language === "en" ? "Configurations" : "Configurations" },
-    { icon: TrendingUp, value: "1500+", label: language === "es" ? "Proyectos" : language === "en" ? "Projects" : "Projets" },
-  ];
 
   return (
     <section
@@ -44,58 +35,44 @@ const Hero = () => {
           </p>
 
           {/* Scalability message */}
-          <p className="text-base text-primary-foreground/70 mb-10 max-w-xl mx-auto animate-fade-in [animation-delay:250ms] opacity-0 font-medium">
+          <p className="text-base text-primary-foreground/70 mb-16 max-w-xl mx-auto animate-fade-in [animation-delay:250ms] opacity-0 font-medium">
             {language === "es" ? "Hecho para escalar — Nos adaptamos a su operación" : 
              language === "en" ? "Built to scale — We adapt to your operation" : 
              "Conçu pour évoluer — Nous nous adaptons à votre opération"}
           </p>
 
-          {/* Logos */}
-          <div className="flex items-center justify-center gap-8 mb-14 animate-fade-in [animation-delay:300ms] opacity-0">
+          {/* Logos — x2 bigger */}
+          <div className="flex items-center justify-center gap-12 animate-fade-in [animation-delay:300ms] opacity-0">
             {/* Banco Atlas */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-5 border border-primary-foreground/20">
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-14 py-8 border border-primary-foreground/20">
               <img
                 src={bancoAtlasLogo}
                 alt="Banco Atlas"
-                className="h-14 object-contain brightness-0 invert"
+                className="h-24 object-contain brightness-0 invert"
               />
             </div>
 
             {/* Divider */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-px bg-primary-foreground/30" />
-              <span className="text-primary-foreground/40 text-lg font-light">×</span>
-              <div className="w-8 h-px bg-primary-foreground/30" />
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-px bg-primary-foreground/30" />
+              <span className="text-primary-foreground/40 text-3xl font-light">×</span>
+              <div className="w-12 h-px bg-primary-foreground/30" />
             </div>
 
             {/* SYSDE + Inventiva */}
-            <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-8 py-5 border border-primary-foreground/20">
+            <div className="flex items-center gap-6 bg-white/10 backdrop-blur-sm rounded-3xl px-14 py-8 border border-primary-foreground/20">
               <img
                 src={sysdeLogo}
                 alt="SYSDE"
-                className="h-12 object-contain brightness-0 invert"
+                className="h-20 object-contain brightness-0 invert"
               />
-              <div className="w-px h-10 bg-primary-foreground/30" />
+              <div className="w-px h-16 bg-primary-foreground/30" />
               <img
                 src={inventiva}
                 alt="Inventiva"
-                className="h-10 object-contain brightness-0 invert"
+                className="h-16 object-contain brightness-0 invert"
               />
             </div>
-          </div>
-
-          {/* Stats Row */}
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 animate-fade-in [animation-delay:400ms] opacity-0">
-            {stats.map((stat, index) => (
-              <div 
-                key={index}
-                className={`flex flex-col items-center p-4 md:p-6 rounded-2xl bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 ${index === 4 ? 'col-span-2 lg:col-span-1' : ''}`}
-              >
-                <stat.icon className="h-6 w-6 md:h-8 md:w-8 text-primary-foreground/80 mb-2" />
-                <span className="text-2xl md:text-3xl font-heading font-bold text-primary-foreground">{stat.value}</span>
-                <span className="text-primary-foreground/70 text-xs md:text-sm mt-1 text-center">{stat.label}</span>
-              </div>
-            ))}
           </div>
         </div>
       </div>
