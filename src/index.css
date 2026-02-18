@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SYSDE Design System - Professional Financial Tech */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+@layer base {
+  :root {
+    /* Primary - SYSDE Red */
+    --primary: 352 85% 43%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary - Corporate Gray */
+    --secondary: 220 9% 46%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Background & Surfaces */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 18%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 18%;
+    
+    /* Muted for subtle backgrounds */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    
+    /* Accent - Light red tint */
+    --accent: 352 85% 97%;
+    --accent-foreground: 352 85% 43%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 352 85% 43%;
+    
+    --radius: 0.75rem;
+    
+    /* Custom SYSDE tokens */
+    --sysde-red: 352 85% 43%;
+    --sysde-dark-red: 352 85% 35%;
+    --sysde-gray-dark: 220 13% 26%;
+    --sysde-gray: 220 9% 46%;
+    --sysde-gray-light: 220 14% 96%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(352 85% 43%) 0%, hsl(352 85% 35%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
+    --gradient-dark: linear-gradient(135deg, hsl(220 13% 18%) 0%, hsl(220 13% 26%) 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 13% 18% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 13% 18% / 0.1), 0 2px 4px -2px hsl(220 13% 18% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(220 13% 18% / 0.1), 0 4px 6px -4px hsl(220 13% 18% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(220 13% 18% / 0.1), 0 8px 10px -6px hsl(220 13% 18% / 0.1);
+    --shadow-red: 0 10px 40px -10px hsl(352 85% 43% / 0.3);
+    
+    /* Sidebar (keeping for shadcn compatibility) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 352 85% 43%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 220 13% 26%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 352 85% 43%;
+  }
+
+  .dark {
+    --background: 220 13% 10%;
+    --foreground: 0 0% 98%;
+    
+    --card: 220 13% 14%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 220 13% 14%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 352 85% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 220 13% 26%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 220 13% 18%;
+    --muted-foreground: 220 9% 60%;
+    
+    --accent: 352 85% 20%;
+    --accent-foreground: 352 85% 70%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 220 13% 20%;
+    --input: 220 13% 20%;
+    --ring: 352 85% 50%;
+    
+    --sidebar-background: 220 13% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 352 85% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 13% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 220 13% 20%;
+    --sidebar-ring: 352 85% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-hero);
+  }
+  
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .bg-gradient-dark {
+    background: var(--gradient-dark);
+  }
+  
+  .shadow-sysde {
+    box-shadow: var(--shadow-red);
+  }
+  
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border/50;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
