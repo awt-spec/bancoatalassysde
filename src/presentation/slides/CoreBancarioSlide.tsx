@@ -16,13 +16,12 @@ interface Module {
   subItems: SubItem[];
 }
 
-// SYSDE primary: hsl(352, 85%, 43%) ≈ #cd1b3b  |  rose gradient top: ~#f4607a
 const PRIMARY = "#cd1b3b";
 const PRIMARY_LIGHT = "#f4607a";
 
 const modules: Module[] = [
   { id: "colocacion",  name: "Colocación",             nameEn: "Lending",                icon: Users,     angle: 320,
-    subItems: [{ name: "Préstamos", nameEn: "Loans" }, { name: "Arrendamiento", nameEn: "Leasing" }, { name: "Factoraje", nameEn: "Factoring" }, { name: "Cartera de Terceros", nameEn: "Third-party Portfolio" }] },
+    subItems: [{ name: "Préstamos", nameEn: "Loans" }, { name: "Arrendamiento", nameEn: "Leasing" }, { name: "Factoraje", nameEn: "Factoring" }] },
   { id: "clientes",   name: "Adm. de Clientes 360°",  nameEn: "Client Mgmt 360°",       icon: Eye,       angle: 280,
     subItems: [{ name: "Perfil Integral", nameEn: "Full Profile" }, { name: "Historial", nameEn: "History" }, { name: "Análisis de Riesgo", nameEn: "Risk Analysis" }] },
   { id: "captacion",  name: "Captación",               nameEn: "Deposits",               icon: PiggyBank, angle: 240,
@@ -55,12 +54,15 @@ const CoreBancarioSlide = () => {
     setTimeout(() => { setActive(null); setTransitioning(false); }, 220);
   };
 
-  const orbitRadius = 40; // % from center
+  // Orbit radius as % of container — 32% keeps all nodes + labels within bounds
+  const orbitRadius = 32;
+  // Container size in px
+  const SIZE = 480;
 
   return (
     <div className="w-full h-full bg-white flex flex-col">
-      {/* ── Header ── */}
-      <div className="text-center pt-5 pb-2 flex-shrink-0">
+      {/* ── Header ── compact, fixed height */}
+      <div className="text-center pt-4 pb-1 flex-shrink-0">
         <motion.p
           initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="text-xs font-bold uppercase tracking-widest mb-0.5"
@@ -70,7 +72,7 @@ const CoreBancarioSlide = () => {
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}
-          className="text-2xl font-black text-gray-900 leading-tight"
+          className="text-xl font-black text-gray-900 leading-tight"
         >
           {t("Una plataforma ", "An ")}
           <span style={{ color: PRIMARY }}>{t("integral", "integrated platform")}</span>
@@ -89,7 +91,7 @@ const CoreBancarioSlide = () => {
             <motion.button
               initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}
               onClick={handleBack}
-              className="mt-1.5 inline-flex items-center gap-1 text-gray-400 hover:text-gray-700 text-xs border border-gray-200 hover:border-gray-400 bg-white rounded-full px-3 py-1 transition-colors shadow-sm"
+              className="mt-1 inline-flex items-center gap-1 text-gray-400 hover:text-gray-700 text-xs border border-gray-200 hover:border-gray-400 bg-white rounded-full px-3 py-1 transition-colors shadow-sm"
             >
               <ArrowLeft className="w-3 h-3" />
               {t("Volver", "Back")}
@@ -98,23 +100,24 @@ const CoreBancarioSlide = () => {
         </AnimatePresence>
       </div>
 
-      {/* ── Solar system ── fills remaining space, centered */}
-      <div className="flex-1 flex items-center justify-center overflow-hidden">
+      {/* ── Solar system — flex-1 centers it in remaining space ── */}
+      <div className="flex-1 flex items-center justify-center">
         <div
           className={`relative transition-all duration-300 ${transitioning ? "opacity-0 scale-90" : "opacity-100 scale-100"}`}
-          style={{ width: 520, height: 520 }}
+          style={{ width: SIZE, height: SIZE }}
         >
-          {/* Orbit rings */}
+          {/* Outer faint ring */}
+          <div className="absolute rounded-full" style={{ inset: "4%", border: "1px solid #f3f4f6" }} />
+          {/* Dashed orbit ring — matches orbitRadius */}
           <div
             className="absolute rounded-full animate-[spin_90s_linear_infinite]"
             style={{
-              inset: "16%",
+              // inset so that ring radius = orbitRadius% of SIZE/2
+              // ring radius = (SIZE/2) * (orbitRadius/100)
+              // inset = 50% - orbitRadius%
+              inset: `${50 - orbitRadius}%`,
               border: "1.5px dashed #d1d5db",
             }}
-          />
-          <div
-            className="absolute rounded-full"
-            style={{ inset: "5%", border: "1px solid #f3f4f6" }}
           />
 
           {/* ── Center ── */}
@@ -126,9 +129,9 @@ const CoreBancarioSlide = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 className="flex flex-col items-center justify-center rounded-full"
                 style={{
-                  width: 110, height: 110,
+                  width: 108, height: 108,
                   background: `radial-gradient(circle at 38% 38%, ${PRIMARY_LIGHT}, ${PRIMARY})`,
-                  boxShadow: `0 0 40px 16px ${PRIMARY}33`,
+                  boxShadow: `0 0 40px 18px ${PRIMARY}28`,
                 }}
               >
                 <active.icon className="w-7 h-7 text-white" />
@@ -144,9 +147,9 @@ const CoreBancarioSlide = () => {
                 transition={{ delay: 0.2, type: "spring", stiffness: 160 }}
                 className="flex flex-col items-center justify-center rounded-full"
                 style={{
-                  width: 110, height: 110,
+                  width: 108, height: 108,
                   background: `radial-gradient(circle at 38% 38%, ${PRIMARY_LIGHT}, ${PRIMARY})`,
-                  boxShadow: `0 0 50px 20px ${PRIMARY}2e`,
+                  boxShadow: `0 0 50px 22px ${PRIMARY}28`,
                 }}
               >
                 <span className="text-white font-black text-lg leading-tight">SYSDE</span>
@@ -155,7 +158,7 @@ const CoreBancarioSlide = () => {
             )}
           </div>
 
-          {/* ── Modules or sub-items ── */}
+          {/* ── Modules / Sub-items ── */}
           {!active
             ? modules.map((mod, i) => {
                 const angleRad = (mod.angle * Math.PI) / 180;
@@ -168,17 +171,17 @@ const CoreBancarioSlide = () => {
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.15 + i * 0.055, type: "spring", stiffness: 200 }}
-                    whileHover={{ scale: 1.13 }}
+                    whileHover={{ scale: 1.12 }}
                     onClick={() => handleClick(mod)}
                     className="absolute z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer"
                     style={{ left: `${x}%`, top: `${y}%` }}
                   >
                     <div
-                      className="rounded-full flex items-center justify-center shadow-sm transition-all duration-300 group-hover:shadow-md"
+                      className="rounded-full flex items-center justify-center shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:scale-105"
                       style={{
-                        width: 54, height: 54,
+                        width: 52, height: 52,
                         background: "#f3f4f6",
-                        border: `2px solid #e5e7eb`,
+                        border: "2px solid #e5e7eb",
                       }}
                       onMouseEnter={e => {
                         (e.currentTarget as HTMLDivElement).style.background = "#fff0f2";
@@ -191,7 +194,7 @@ const CoreBancarioSlide = () => {
                     >
                       <Icon className="w-5 h-5" style={{ color: PRIMARY }} />
                     </div>
-                    <span className="mt-1.5 text-[10px] font-medium text-gray-500 group-hover:text-gray-800 text-center leading-tight max-w-[78px] transition-colors">
+                    <span className="mt-1 text-[10px] font-medium text-gray-500 group-hover:text-gray-800 text-center leading-tight max-w-[76px] transition-colors">
                       {lang === "es" ? mod.name : mod.nameEn}
                     </span>
                   </motion.button>
@@ -209,14 +212,14 @@ const CoreBancarioSlide = () => {
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.07, type: "spring", stiffness: 200 }}
-                    className="absolute z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group"
+                    className="absolute z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
                     style={{ left: `${x}%`, top: `${y}%` }}
                   >
                     <div className="rounded-full flex items-center justify-center shadow-sm"
                       style={{ width: 48, height: 48, background: "#f3f4f6", border: `2px solid ${PRIMARY}55` }}>
                       <Circle className="w-2.5 h-2.5" style={{ color: PRIMARY, fill: PRIMARY }} />
                     </div>
-                    <span className="mt-1.5 text-[10px] font-medium text-gray-500 text-center leading-tight max-w-[78px]">
+                    <span className="mt-1 text-[10px] font-medium text-gray-500 text-center leading-tight max-w-[76px]">
                       {lang === "es" ? item.name : item.nameEn}
                     </span>
                     <svg className="absolute pointer-events-none -z-10"
