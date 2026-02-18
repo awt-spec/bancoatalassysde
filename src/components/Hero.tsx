@@ -42,52 +42,50 @@ const Hero = () => {
           </p>
 
           {/* Logos */}
-          <div className="flex items-end justify-center gap-6 animate-fade-in [animation-delay:300ms] opacity-0">
+          <div className="flex items-center justify-center gap-0 animate-fade-in [animation-delay:300ms] opacity-0">
 
-            {/* Banco Atlas — "para" label */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-primary-foreground/50 text-xs font-semibold uppercase tracking-widest">para</span>
-              <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
+            {/* Banco Atlas */}
+            <div className="flex flex-col items-center gap-3">
+              <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">para</span>
+              <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center">
                 <img
                   src={bancoAtlasLogo}
                   alt="Banco Atlas"
-                  className="h-28 w-44 object-contain brightness-0 invert"
+                  className="h-16 w-48 object-contain brightness-0 invert"
                 />
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-4 h-px bg-primary-foreground/30" />
-              <span className="text-primary-foreground/40 text-3xl font-light">·</span>
-              <div className="w-4 h-px bg-primary-foreground/30" />
+            {/* Separator dot */}
+            <div className="flex flex-col items-center justify-center w-16 mt-6">
+              <span className="text-primary-foreground/30 text-lg">·</span>
             </div>
 
-            {/* SYSDE — "de" label */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-primary-foreground/50 text-xs font-semibold uppercase tracking-widest">de</span>
-              <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
+            {/* SYSDE */}
+            <div className="flex flex-col items-center gap-3">
+              <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">de</span>
+              <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center">
                 <img
                   src={sysdeLogo}
                   alt="SYSDE"
-                  className="h-28 w-44 object-contain brightness-0 invert"
+                  className="h-16 w-48 object-contain brightness-0 invert"
                 />
               </div>
             </div>
 
-            {/* Divider | */}
-            <div className="flex items-center mb-4">
-              <div className="w-px h-16 bg-primary-foreground/25" />
+            {/* Separator vertical line */}
+            <div className="flex flex-col items-center justify-center w-16 mt-6">
+              <div className="w-px h-10 bg-primary-foreground/25" />
             </div>
 
-            {/* Inventiva — "e" label */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-primary-foreground/50 text-xs font-semibold uppercase tracking-widest">e</span>
-              <div className="bg-white/10 backdrop-blur-sm rounded-3xl px-10 py-8 border border-primary-foreground/20">
+            {/* Inventiva */}
+            <div className="flex flex-col items-center gap-3">
+              <span className="text-primary-foreground/50 text-[11px] font-bold uppercase tracking-[0.25em]">e</span>
+              <div className="w-[280px] h-[140px] bg-white/10 backdrop-blur-sm rounded-2xl border border-white/15 flex items-center justify-center">
                 <img
                   src={inventiva}
                   alt="Inventiva"
-                  className="h-28 w-44 object-contain brightness-0 invert"
+                  className="h-16 w-48 object-contain brightness-0 invert"
                 />
               </div>
             </div>
