@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Maximize2, Minimize2, Globe } from "lucide-react";
 import { PresentationLangProvider, usePresentationLanguage } from "./hooks/usePresentationLanguage";
 import WelcomeSlide from "./slides/WelcomeSlide";
-import MapSlide from "./slides/MapSlide";
+import OperationalSequenceSlide from "./slides/OperationalSequenceSlide";
 import CuentasSlide from "./slides/CuentasSlide";
 import CreditosSlide from "./slides/CreditosSlide";
 import PagosSlide from "./slides/PagosSlide";
@@ -93,7 +93,7 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
 
   const slides = [
     <WelcomeSlide key="welcome" />,
-    <MapSlide key="map" onNavigate={(s) => navigate(s, "zoom-in")} />,
+    <OperationalSequenceSlide key="operacional" />,
     <CuentasSlide key="cuentas" />,
     <CreditosSlide key="creditos" />,
     <PagosSlide key="pagos" />,

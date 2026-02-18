@@ -1,389 +1,163 @@
-import { useState } from "react";
-import { 
-  Shield, 
-  BarChart3, 
-  Users, 
-  Smartphone, 
-  Wallet, 
-  PiggyBank,
-  FileText,
-  Building2,
-  Eye,
-  ArrowLeft,
-  Circle
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import {
+  Users, CreditCard, Send, Smartphone, BarChart3,
+  ShieldCheck, Plug, Landmark,
 } from "lucide-react";
 
-interface SubItem {
-  name: string;
-}
+const modules = [
+  { icon: Users,       colorClass: "bg-blue-600",    label: "Cuentas y\nDepósitos"     },
+  { icon: CreditCard,  colorClass: "bg-violet-600",  label: "Créditos y\nPréstamos"    },
+  { icon: Send,        colorClass: "bg-emerald-600", label: "Pagos y\nTransferencias"  },
+  { icon: Smartphone,  colorClass: "bg-orange-500",  label: "Canales\nDigitales"       },
+  { icon: BarChart3,   colorClass: "bg-pink-600",    label: "Reportería y\nBI"         },
+  { icon: ShieldCheck, colorClass: "bg-teal-600",    label: "Compliance y\nSeguridad"  },
+  { icon: Plug,        colorClass: "bg-amber-500",   label: "APIs e\nIntegración"      },
+  { icon: Landmark,    colorClass: "bg-rose-600",    label: "Core\nBancario"           },
+];
 
-interface Module {
-  id: string;
-  name: string;
-  icon: React.ElementType;
-  angle: number;
-  subItems: SubItem[];
-}
+const positions = [
+  { x: 50, y: 8  },
+  { x: 82, y: 26 },
+  { x: 90, y: 58 },
+  { x: 72, y: 84 },
+  { x: 50, y: 92 },
+  { x: 28, y: 84 },
+  { x: 10, y: 58 },
+  { x: 18, y: 26 },
+];
 
-const modules: Module[] = [
-  {
-    id: "reporteria",
-    name: "Reportería y BI",
-    icon: BarChart3,
-    angle: 0,
-    subItems: [
-      { name: "Gestor de Notificaciones" },
-      { name: "Gestor de Facturación Electrónica" },
-      { name: "Flujo de Gestión de Cobro" },
-      { name: "Originación de Préstamos" },
-    ],
-  },
-  {
-    id: "seguridad",
-    name: "Seguridad y Reglas de Negocios",
-    icon: Shield,
-    angle: 40,
-    subItems: [
-      { name: "Control de Accesos" },
-      { name: "Auditoría de Transacciones" },
-      { name: "Reglas de Negocio" },
-    ],
-  },
-  {
-    id: "componentes",
-    name: "Componentes Integrados",
-    icon: Building2,
-    angle: 80,
-    subItems: [
-      { name: "APIs REST" },
-      { name: "Integraciones Bancarias" },
-      { name: "Servicios de Terceros" },
-    ],
-  },
-  {
-    id: "canales",
-    name: "Canales Digitales",
-    icon: Smartphone,
-    angle: 120,
-    subItems: [
-      { name: "Avances de Obra Móvil" },
-      { name: "Billetera Móvil" },
-      { name: "Originación Móvil" },
-      { name: "Banca Móvil" },
-      { name: "Gestión Cobranza" },
-    ],
-  },
-  {
-    id: "tesoreria",
-    name: "Tesorería y Auxiliares",
-    icon: Wallet,
-    angle: 160,
-    subItems: [
-      { name: "Cajas" },
-      { name: "Cuentas Bancarias" },
-      { name: "Custodia Valores" },
-      { name: "Contabilidad" },
-      { name: "Activos Fijos" },
-      { name: "Presupuesto" },
-    ],
-  },
-  {
-    id: "captacion",
-    name: "Captación",
-    icon: PiggyBank,
-    angle: 200,
-    subItems: [
-      { name: "Depósitos a Plazo" },
-      { name: "Cuentas Corrientes" },
-      { name: "Tarjeta de Débito" },
-      { name: "Cuentas de Ahorro" },
-    ],
-  },
-  {
-    id: "clientes",
-    name: "Adm. de Clientes 360°",
-    icon: Eye,
-    angle: 240,
-    subItems: [
-      { name: "Perfil Integral" },
-      { name: "Historial de Operaciones" },
-      { name: "Análisis de Riesgo" },
-    ],
-  },
-  {
-    id: "colocacion",
-    name: "Colocación",
-    icon: Users,
-    angle: 280,
-    subItems: [
-      { name: "Arrendamiento" },
-      { name: "Adm. de Pasivos" },
-      { name: "Préstamos" },
-      { name: "Cartera de Terceros" },
-      { name: "Portal Factoraje" },
-      { name: "Factoraje" },
-    ],
-  },
-  {
-    id: "extractores",
-    name: "Reportería Regulatoria",
-    icon: FileText,
-    angle: 320,
-    subItems: [
-      { name: "Reportes CNBV" },
-      { name: "Reportes Banco Central" },
-      { name: "Cumplimiento Normativo" },
-    ],
-  },
+const connections = [
+  [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 0],
+  [0, 4], [1, 5], [2, 6], [3, 7],
 ];
 
 const SAFPlusMap = () => {
-  const [activeModule, setActiveModule] = useState<Module | null>(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const handleModuleClick = (module: Module) => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setActiveModule(module);
-      setIsTransitioning(false);
-    }, 300);
-  };
-
-  const handleBack = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setActiveModule(null);
-      setIsTransitioning(false);
-    }, 300);
-  };
+  const navigate = useNavigate();
 
   return (
-    <section className="py-20 bg-muted/30 overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section id="ecosistema" className="py-20 bg-[#09090b] overflow-hidden relative">
+      {/* Background dot grid */}
+      <div
+        className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #ffffff22 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">
-            Ecosistema SAF+
-          </span>
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
-            Una plataforma <span className="text-primary">integral</span>
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            {activeModule 
-              ? `Explorando: ${activeModule.name}` 
-              : "Haz clic en un módulo para explorar sus componentes"
-            }
-          </p>
-        </div>
-
-        {/* Back button */}
-        {activeModule && (
-          <div className="flex justify-center mb-8">
-            <button
-              onClick={handleBack}
-              className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-full hover:border-primary/50 transition-all group"
-            >
-              <ArrowLeft className="w-4 h-4 text-primary group-hover:-translate-x-1 transition-transform" />
-              <span className="text-foreground">Volver al sistema principal</span>
-            </button>
-          </div>
-        )}
-
-        {/* Solar System Container */}
-        <div className="relative max-w-4xl mx-auto">
-          <div 
-            className={`relative aspect-square max-w-[600px] mx-auto transition-all duration-500 ${
-              isTransitioning ? "opacity-0 scale-90" : "opacity-100 scale-100"
-            }`}
+          <motion.span
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block text-white/50 font-semibold text-sm uppercase tracking-wider mb-4"
           >
-            {/* Orbit rings */}
-            <div className="absolute inset-[20%] border-2 border-dashed border-border rounded-full opacity-40 animate-[spin_60s_linear_infinite]" />
-            <div className="absolute inset-[8%] border border-dashed border-border rounded-full opacity-20" />
-
-            {!activeModule ? (
-              /* Main Solar System - SAF+ Center */
-              <>
-                {/* Center - SAF+ */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                  <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-primary flex items-center justify-center shadow-2xl border-4 border-primary-foreground/20">
-                    <div className="text-center">
-                      <span className="font-heading font-bold text-primary-foreground text-base md:text-xl">SYSDE</span>
-                      <span className="block font-heading font-bold text-primary-foreground text-sm md:text-base">SAF+</span>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 rounded-full bg-primary/30 blur-xl -z-10 animate-pulse" />
-                </div>
-
-                {/* Orbiting Modules */}
-                {modules.map((module, index) => {
-                  const radius = 38;
-                  const angleRad = (module.angle * Math.PI) / 180;
-                  const x = 50 + radius * Math.cos(angleRad);
-                  const y = 50 + radius * Math.sin(angleRad);
-                  const Icon = module.icon;
-
-                  return (
-                    <button
-                      key={module.id}
-                      onClick={() => handleModuleClick(module)}
-                      className="absolute z-10 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300 group hover:scale-110"
-                      style={{
-                        left: `${x}%`,
-                        top: `${y}%`,
-                        animation: `fadeInScale 0.5s ease-out ${index * 0.08}s forwards`,
-                        opacity: 0,
-                      }}
-                    >
-                      <div className="w-14 h-14 md:w-18 md:h-18 rounded-full bg-card border-2 border-border hover:border-primary hover:bg-primary hover:text-primary-foreground flex items-center justify-center shadow-lg transition-all duration-300 group-hover:shadow-xl">
-                        <Icon className="w-6 h-6 md:w-7 md:h-7 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <div className="absolute left-1/2 -translate-x-1/2 mt-2 whitespace-nowrap">
-                        <span className="text-[10px] md:text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors max-w-[80px] block text-center leading-tight">
-                          {module.name}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </>
-            ) : (
-              /* Mini Solar System - Selected Module */
-              <>
-                {/* Center - Selected Module */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                  <div className="w-28 h-28 md:w-36 md:h-36 rounded-full bg-primary flex items-center justify-center shadow-2xl border-4 border-primary-foreground/20">
-                    <div className="text-center p-2">
-                      <activeModule.icon className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground mx-auto mb-1" />
-                      <span className="font-heading font-bold text-primary-foreground text-xs md:text-sm leading-tight block">
-                        {activeModule.name}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 rounded-full bg-primary/30 blur-xl -z-10 animate-pulse" />
-                </div>
-
-                {/* Orbiting Sub-items */}
-                {activeModule.subItems.map((item, index) => {
-                  const totalItems = activeModule.subItems.length;
-                  const angleStep = 360 / totalItems;
-                  const angle = index * angleStep - 90; // Start from top
-                  const radius = 38;
-                  const angleRad = (angle * Math.PI) / 180;
-                  const x = 50 + radius * Math.cos(angleRad);
-                  const y = 50 + radius * Math.sin(angleRad);
-
-                  return (
-                    <div
-                      key={index}
-                      className="absolute z-10 transform -translate-x-1/2 -translate-y-1/2"
-                      style={{
-                        left: `${x}%`,
-                        top: `${y}%`,
-                        animation: `fadeInScale 0.4s ease-out ${index * 0.1}s forwards`,
-                        opacity: 0,
-                      }}
-                    >
-                      {/* Sub-item node */}
-                      <div className="group cursor-pointer">
-                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-card border-2 border-primary/30 hover:border-primary hover:bg-primary/10 flex items-center justify-center shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:scale-110">
-                          <Circle className="w-3 h-3 md:w-4 md:h-4 text-primary fill-primary" />
-                        </div>
-                        
-                        {/* Label */}
-                        <div className="absolute left-1/2 -translate-x-1/2 mt-2 whitespace-nowrap">
-                          <span className="text-[10px] md:text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors max-w-[90px] block text-center leading-tight">
-                            {item.name}
-                          </span>
-                        </div>
-
-                        {/* Tooltip on hover */}
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                          <div className="bg-foreground text-background px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap">
-                            {item.name}
-                          </div>
-                          <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 bg-foreground rotate-45" />
-                        </div>
-                      </div>
-
-                      {/* Connection line to center */}
-                      <svg
-                        className="absolute pointer-events-none"
-                        style={{
-                          width: "200px",
-                          height: "200px",
-                          left: "50%",
-                          top: "50%",
-                          transform: "translate(-50%, -50%)",
-                          zIndex: -1,
-                        }}
-                      >
-                        <line
-                          x1="100"
-                          y1="100"
-                          x2={100 + (50 - x) * 2}
-                          y2={100 + (50 - y) * 2}
-                          className="stroke-primary/20"
-                          strokeWidth="1"
-                          strokeDasharray="4 4"
-                        />
-                      </svg>
-                    </div>
-                  );
-                })}
-              </>
-            )}
-          </div>
-
-          {/* Mobile List View */}
-          <div className="md:hidden mt-8">
-            {!activeModule ? (
-              <div className="grid grid-cols-3 gap-3">
-                {modules.map((module) => {
-                  const Icon = module.icon;
-                  return (
-                    <button
-                      key={module.id}
-                      onClick={() => handleModuleClick(module)}
-                      className="p-3 rounded-xl border border-border bg-card hover:border-primary transition-all"
-                    >
-                      <Icon className="w-5 h-5 mx-auto mb-1 text-primary" />
-                      <span className="text-[10px] leading-tight block text-muted-foreground">
-                        {module.name}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="space-y-2">
-                {activeModule.subItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-3 bg-card rounded-xl border border-border"
-                  >
-                    <Circle className="w-3 h-3 text-primary fill-primary flex-shrink-0" />
-                    <span className="text-sm text-foreground">{item.name}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+            Ecosistema SAF+
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="font-heading text-3xl md:text-4xl lg:text-5xl text-white mb-4"
+          >
+            Una plataforma <span className="text-primary">integral</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-white/40 text-lg"
+          >
+            Haz clic en un módulo para explorar la presentación interactiva
+          </motion.p>
         </div>
-      </div>
 
-      {/* Keyframes */}
-      <style>{`
-        @keyframes fadeInScale {
-          from {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0);
-          }
-          to {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-          }
-        }
-      `}</style>
+        {/* Network map */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="relative w-full max-w-2xl aspect-square mx-auto"
+        >
+          {/* SVG connections */}
+          <svg className="absolute inset-0 w-full h-full">
+            {connections.map(([a, b], i) => {
+              const pa = positions[a];
+              const pb = positions[b];
+              return (
+                <motion.line
+                  key={i}
+                  x1={`${pa.x}%`} y1={`${pa.y}%`}
+                  x2={`${pb.x}%`} y2={`${pb.y}%`}
+                  stroke="rgba(255,255,255,0.10)"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 + i * 0.05, duration: 0.6 }}
+                />
+              );
+            })}
+          </svg>
+
+          {/* Center label */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm flex items-center justify-center">
+              <span className="text-white font-bold text-xs text-center leading-tight">SYSDE<br/>Banca+</span>
+            </div>
+            <div className="absolute inset-0 rounded-full bg-white/5 blur-xl -z-10 animate-pulse" />
+          </div>
+
+          {/* Module nodes */}
+          {modules.map((mod, i) => {
+            const pos = positions[i];
+            const Icon = mod.icon;
+            return (
+              <motion.button
+                key={i}
+                onClick={() => navigate("/presentacion")}
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 + i * 0.07, type: "spring", stiffness: 200 }}
+                whileHover={{ scale: 1.15, zIndex: 10 }}
+                className="absolute flex flex-col items-center gap-2 group -translate-x-1/2 -translate-y-1/2"
+                style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+              >
+                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl ${mod.colorClass} flex items-center justify-center shadow-lg shadow-black/40 group-hover:shadow-xl transition-shadow`}>
+                  <Icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                </div>
+                <span className="text-white/70 text-[10px] md:text-xs font-medium text-center leading-tight whitespace-pre-line group-hover:text-white transition-colors">
+                  {mod.label}
+                </span>
+              </motion.button>
+            );
+          })}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.8 }}
+          className="text-center mt-12"
+        >
+          <button
+            onClick={() => navigate("/presentacion")}
+            className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-3.5 rounded-full transition-colors shadow-lg shadow-primary/20"
+          >
+            Ver presentación interactiva completa →
+          </button>
+        </motion.div>
+      </div>
     </section>
   );
 };
