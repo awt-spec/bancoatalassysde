@@ -1,13 +1,10 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useNavigate } from "react-router-dom";
-import { Presentation } from "lucide-react";
 import bancoAtlasLogo from "@/assets/banco-atlas-logo-new.png";
 import inventiva from "@/assets/inventiva-logo-new.png";
 import sysdeLogo from "@/assets/sysde-logo-new.png";
 
 const Hero = () => {
   const { t, language } = useLanguage();
-  const navigate = useNavigate();
 
   return (
     <section
@@ -78,11 +75,9 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Divider × */}
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-4 h-px bg-primary-foreground/30" />
-              <span className="text-primary-foreground/40 text-3xl font-light">×</span>
-              <div className="w-4 h-px bg-primary-foreground/30" />
+            {/* Divider | */}
+            <div className="flex items-center mb-4">
+              <div className="w-px h-16 bg-primary-foreground/25" />
             </div>
 
             {/* Inventiva — "e" label */}
@@ -99,17 +94,6 @@ const Hero = () => {
 
           </div>
 
-          {/* Presentation CTA */}
-          <div className="mt-12 animate-fade-in [animation-delay:400ms] opacity-0">
-            <button
-              onClick={() => navigate("/presentacion")}
-              className="inline-flex items-center gap-3 bg-primary-foreground/10 hover:bg-primary-foreground/20 backdrop-blur-sm border border-primary-foreground/30 hover:border-primary-foreground/50 text-primary-foreground rounded-full px-8 py-4 text-sm font-semibold transition-all duration-300 group"
-            >
-              <Presentation className="h-5 w-5 group-hover:scale-110 transition-transform" />
-              {language === "es" ? "Ver presentación interactiva" : language === "en" ? "View interactive presentation" : "Voir la présentation interactive"}
-              <span className="text-primary-foreground/50 text-xs ml-1">→</span>
-            </button>
-          </div>
         </div>
       </div>
 
