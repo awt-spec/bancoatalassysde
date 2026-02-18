@@ -1,245 +1,285 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { usePresentationLanguage } from "../hooks/usePresentationLanguage";
-import { Landmark, CheckCircle2, ArrowLeft } from "lucide-react";
+import {
+  Shield, BarChart3, Users, Smartphone, Wallet,
+  PiggyBank, FileText, Building2, Eye, ArrowLeft, Circle,
+} from "lucide-react";
 
-const planets = [
+interface SubItem { name: string; nameEn: string; }
+interface Module {
+  id: string;
+  name: string;
+  nameEn: string;
+  icon: React.ElementType;
+  angle: number;
+  subItems: SubItem[];
+}
+
+const modules: Module[] = [
   {
-    id: "experiencia",
-    emoji: "🏦",
-    es: "33+ años\nde experiencia",
-    en: "33+ years\nof experience",
-    color: "#f43f5e",
-    size: 60,
-    orbit: 90,
-    speed: 18,
-    detail: {
-      es: ["Fundada en 1990", "Pioneros en core bancario latinoamericano", "Evolución continua con la tecnología"],
-      en: ["Founded in 1990", "Pioneers in Latin American banking core", "Continuous evolution with technology"],
-    },
+    id: "reporteria", name: "Reportería y BI", nameEn: "Reporting & BI",
+    icon: BarChart3, angle: 0,
+    subItems: [
+      { name: "Gestor de Notificaciones", nameEn: "Notification Manager" },
+      { name: "Facturación Electrónica", nameEn: "Electronic Billing" },
+      { name: "Flujo de Gestión de Cobro", nameEn: "Collection Management" },
+      { name: "Originación de Préstamos", nameEn: "Loan Origination" },
+    ],
   },
   {
-    id: "paises",
-    emoji: "🌍",
-    es: "34+\npaíses",
-    en: "34+\ncountries",
-    color: "#3b82f6",
-    size: 55,
-    orbit: 150,
-    speed: 28,
-    detail: {
-      es: ["América Latina y el Caribe", "Presencia activa en Paraguay", "Red de socios locales"],
-      en: ["Latin America and the Caribbean", "Active presence in Paraguay", "Local partner network"],
-    },
+    id: "seguridad", name: "Seguridad y Reglas", nameEn: "Security & Rules",
+    icon: Shield, angle: 40,
+    subItems: [
+      { name: "Control de Accesos", nameEn: "Access Control" },
+      { name: "Auditoría de Transacciones", nameEn: "Transaction Audit" },
+      { name: "Reglas de Negocio", nameEn: "Business Rules" },
+    ],
   },
   {
-    id: "clientes",
-    emoji: "🏛️",
-    es: "1000+\nclientes",
-    en: "1000+\nclients",
-    color: "#10b981",
-    size: 58,
-    orbit: 210,
-    speed: 38,
-    detail: {
-      es: ["Bancos, financieras y cooperativas", "Instituciones de microfinanzas", "Clientes activos y satisfechos"],
-      en: ["Banks, finance companies and cooperatives", "Microfinance institutions", "Active and satisfied clients"],
-    },
+    id: "componentes", name: "Componentes Integrados", nameEn: "Integrated Components",
+    icon: Building2, angle: 80,
+    subItems: [
+      { name: "APIs REST", nameEn: "REST APIs" },
+      { name: "Integraciones Bancarias", nameEn: "Banking Integrations" },
+      { name: "Servicios de Terceros", nameEn: "Third-party Services" },
+    ],
   },
   {
-    id: "plataforma",
-    emoji: "💻",
-    es: "100% web\nmulti-tenant",
-    en: "100% web\nmulti-tenant",
-    color: "#8b5cf6",
-    size: 52,
-    orbit: 265,
-    speed: 50,
-    detail: {
-      es: ["Acceso desde cualquier dispositivo", "Arquitectura cloud-native", "Sin instalaciones locales"],
-      en: ["Access from any device", "Cloud-native architecture", "No local installations"],
-    },
+    id: "canales", name: "Canales Digitales", nameEn: "Digital Channels",
+    icon: Smartphone, angle: 120,
+    subItems: [
+      { name: "Banca Móvil", nameEn: "Mobile Banking" },
+      { name: "Billetera Móvil", nameEn: "Mobile Wallet" },
+      { name: "Originación Móvil", nameEn: "Mobile Origination" },
+      { name: "Gestión Cobranza", nameEn: "Collections Management" },
+    ],
   },
   {
-    id: "implementacion",
-    emoji: "⚡",
-    es: "6-12 meses\nimplementación",
-    en: "6-12 months\nimplementation",
-    color: "#f59e0b",
-    size: 48,
-    orbit: 315,
-    speed: 65,
-    detail: {
-      es: ["Metodología ágil probada", "Equipo dedicado en sitio", "Acompañamiento post-lanzamiento"],
-      en: ["Proven agile methodology", "Dedicated on-site team", "Post-launch support"],
-    },
+    id: "tesoreria", name: "Tesorería y Auxiliares", nameEn: "Treasury & Auxiliaries",
+    icon: Wallet, angle: 160,
+    subItems: [
+      { name: "Cajas", nameEn: "Cash Registers" },
+      { name: "Cuentas Bancarias", nameEn: "Bank Accounts" },
+      { name: "Contabilidad", nameEn: "Accounting" },
+      { name: "Activos Fijos", nameEn: "Fixed Assets" },
+      { name: "Presupuesto", nameEn: "Budget" },
+    ],
+  },
+  {
+    id: "captacion", name: "Captación", nameEn: "Deposits",
+    icon: PiggyBank, angle: 200,
+    subItems: [
+      { name: "Depósitos a Plazo", nameEn: "Term Deposits" },
+      { name: "Cuentas Corrientes", nameEn: "Checking Accounts" },
+      { name: "Tarjeta de Débito", nameEn: "Debit Card" },
+      { name: "Cuentas de Ahorro", nameEn: "Savings Accounts" },
+    ],
+  },
+  {
+    id: "clientes", name: "Adm. de Clientes 360°", nameEn: "Client Management 360°",
+    icon: Eye, angle: 240,
+    subItems: [
+      { name: "Perfil Integral", nameEn: "Full Profile" },
+      { name: "Historial de Operaciones", nameEn: "Operation History" },
+      { name: "Análisis de Riesgo", nameEn: "Risk Analysis" },
+    ],
+  },
+  {
+    id: "colocacion", name: "Colocación", nameEn: "Lending",
+    icon: Users, angle: 280,
+    subItems: [
+      { name: "Préstamos", nameEn: "Loans" },
+      { name: "Arrendamiento", nameEn: "Leasing" },
+      { name: "Factoraje", nameEn: "Factoring" },
+      { name: "Cartera de Terceros", nameEn: "Third-party Portfolio" },
+    ],
+  },
+  {
+    id: "extractores", name: "Reportería Regulatoria", nameEn: "Regulatory Reporting",
+    icon: FileText, angle: 320,
+    subItems: [
+      { name: "Reportes Banco Central", nameEn: "Central Bank Reports" },
+      { name: "Cumplimiento Normativo", nameEn: "Regulatory Compliance" },
+    ],
   },
 ];
 
 const CoreBancarioSlide = () => {
   const { t, lang } = usePresentationLanguage();
-  const [selected, setSelected] = useState<string | null>(null);
+  const [active, setActive] = useState<Module | null>(null);
+  const [transitioning, setTransitioning] = useState(false);
 
-  const selectedPlanet = planets.find((p) => p.id === selected);
+  const handleClick = (mod: Module) => {
+    setTransitioning(true);
+    setTimeout(() => { setActive(mod); setTransitioning(false); }, 250);
+  };
+
+  const handleBack = () => {
+    setTransitioning(true);
+    setTimeout(() => { setActive(null); setTransitioning(false); }, 250);
+  };
+
+  const displayModules = active ? active.subItems : modules;
+  const radius = 38;
 
   return (
-    <div className="w-full h-full bg-[#050510] flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Starfield */}
-      {Array.from({ length: 60 }).map((_, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full bg-white"
-          style={{
-            width: Math.random() * 2 + 1,
-            height: Math.random() * 2 + 1,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            opacity: Math.random() * 0.6 + 0.2,
-          }}
-        />
-      ))}
+    <div className="w-full h-full bg-[#09090b] flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Subtle grid */}
+      <div className="absolute inset-0 opacity-[0.06]" style={{
+        backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+        backgroundSize: "40px 40px",
+      }} />
 
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
         className="absolute top-8 text-center z-20"
       >
-        <p className="text-rose-400 text-xs font-semibold uppercase tracking-widest mb-1">{t("Módulo", "Module")} 08</p>
-        <h2 className="text-2xl font-black text-white">{t("¿Por qué SYSDE?", "Why SYSDE?")}</h2>
-        <p className="text-white/40 text-xs mt-1">{t("Haz clic en un planeta para explorar", "Click a planet to explore")}</p>
+        <p className="text-rose-400 text-xs font-semibold uppercase tracking-widest mb-1">
+          {t("Ecosistema SAF+", "SAF+ Ecosystem")}
+        </p>
+        <h2 className="text-2xl font-black text-white">
+          {t("Una plataforma ", "An ")}
+          <span className="text-rose-400">{t("integral", "integrated platform")}</span>
+          {t("", "")}
+        </h2>
+        <p className="text-white/40 text-xs mt-1">
+          {active
+            ? (lang === "es" ? `Explorando: ${active.name}` : `Exploring: ${active.nameEn}`)
+            : t("Haz clic en un módulo para explorar", "Click a module to explore")}
+        </p>
       </motion.div>
 
-      {/* Solar system */}
-      <div className="relative flex items-center justify-center" style={{ width: 700, height: 700 }}>
-        {/* Orbit rings */}
-        {planets.map((p) => (
-          <div
-            key={p.id + "-ring"}
-            className="absolute rounded-full border border-white/8"
-            style={{
-              width: p.orbit * 2,
-              height: p.orbit * 2,
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        ))}
-
-        {/* Center — Sun */}
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2, type: "spring" }}
-          className="absolute z-10 flex flex-col items-center justify-center rounded-full shadow-[0_0_60px_20px_rgba(244,63,94,0.4)]"
-          style={{
-            width: 110,
-            height: 110,
-            background: "radial-gradient(circle, #fb7185, #e11d48)",
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Landmark className="w-8 h-8 text-white" />
-          <span className="text-white text-[10px] font-black mt-1">SYSDE</span>
-        </motion.div>
-
-        {/* Planets — using CSS custom animation via translateX/Y keyframes */}
-        {planets.map((planet, i) => {
-          const startAngleDeg = (i * 360) / planets.length - 90;
-          const startAngleRad = (startAngleDeg * Math.PI) / 180;
-          const cx = 350;
-          const cy = 350;
-          const r = planet.orbit;
-
-          const kf = [
-            { tx: r * Math.cos(startAngleRad), ty: r * Math.sin(startAngleRad) },
-            { tx: r * Math.cos(startAngleRad + Math.PI * 0.5), ty: r * Math.sin(startAngleRad + Math.PI * 0.5) },
-            { tx: r * Math.cos(startAngleRad + Math.PI), ty: r * Math.sin(startAngleRad + Math.PI) },
-            { tx: r * Math.cos(startAngleRad + Math.PI * 1.5), ty: r * Math.sin(startAngleRad + Math.PI * 1.5) },
-            { tx: r * Math.cos(startAngleRad + Math.PI * 2), ty: r * Math.sin(startAngleRad + Math.PI * 2) },
-          ];
-
-          return (
-            <motion.button
-              key={planet.id}
-              className="absolute flex flex-col items-center"
-              style={{ left: cx, top: cy, x: "-50%", y: "-50%", translateX: kf[0].tx, translateY: kf[0].ty }}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                translateX: kf.map(k => k.tx),
-                translateY: kf.map(k => k.ty),
-              }}
-              transition={{
-                opacity: { delay: 0.4 + i * 0.15, duration: 0.5 },
-                scale: { delay: 0.4 + i * 0.15, duration: 0.5 },
-                translateX: { duration: planet.speed, repeat: Infinity, ease: "linear", delay: 0.5 + i * 0.15 },
-                translateY: { duration: planet.speed, repeat: Infinity, ease: "linear", delay: 0.5 + i * 0.15 },
-              }}
-              whileHover={{ scale: 1.2 }}
-              onClick={() => setSelected(selected === planet.id ? null : planet.id)}
-            >
-              <div
-                className="rounded-full flex items-center justify-center shadow-lg cursor-pointer border-2 transition-all"
-                style={{
-                  width: planet.size,
-                  height: planet.size,
-                  background: `radial-gradient(circle at 35% 35%, ${planet.color}cc, ${planet.color}66)`,
-                  borderColor: selected === planet.id ? "white" : `${planet.color}88`,
-                  boxShadow: selected === planet.id ? `0 0 20px 6px ${planet.color}66` : `0 0 12px 2px ${planet.color}33`,
-                }}
-              >
-                <span style={{ fontSize: planet.size * 0.4 }}>{planet.emoji}</span>
-              </div>
-              <span className="text-white/80 text-[10px] font-medium text-center leading-tight whitespace-pre-line mt-1.5 max-w-[90px]">
-                {t(planet.es, planet.en)}
-              </span>
-            </motion.button>
-          );
-        })}
-      </div>
-
-      {/* Detail panel */}
+      {/* Back button */}
       <AnimatePresence>
-        {selectedPlanet && (
-          <motion.div
-            key={selectedPlanet.id}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 40 }}
-            className="absolute right-8 top-1/2 -translate-y-1/2 z-30 w-64 rounded-2xl border p-5"
-            style={{
-              background: `${selectedPlanet.color}18`,
-              borderColor: `${selectedPlanet.color}44`,
-            }}
+        {active && (
+          <motion.button
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            onClick={handleBack}
+            className="absolute top-28 z-30 flex items-center gap-1.5 text-white/50 hover:text-white text-xs border border-white/20 hover:border-white/40 rounded-full px-3 py-1.5 transition-colors"
           >
-            <button
-              onClick={() => setSelected(null)}
-              className="flex items-center gap-1 text-white/50 text-xs mb-3 hover:text-white/80 transition-colors"
-            >
-              <ArrowLeft className="w-3 h-3" /> {t("Cerrar", "Close")}
-            </button>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-3xl">{selectedPlanet.emoji}</span>
-              <p className="text-white font-bold text-sm leading-tight whitespace-pre-line">
-                {t(selectedPlanet.es, selectedPlanet.en)}
-              </p>
-            </div>
-            <div className="space-y-2">
-              {(lang === "es" ? selectedPlanet.detail.es : selectedPlanet.detail.en).map((item, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: selectedPlanet.color }} />
-                  <p className="text-white/70 text-xs">{item}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+            <ArrowLeft className="w-3 h-3" />
+            {t("Volver al ecosistema", "Back to ecosystem")}
+          </motion.button>
         )}
       </AnimatePresence>
+
+      {/* Solar system */}
+      <div
+        className={`relative transition-all duration-300 ${transitioning ? "opacity-0 scale-90" : "opacity-100 scale-100"}`}
+        style={{ width: 560, height: 560 }}
+      >
+        {/* Orbit rings */}
+        <div className="absolute rounded-full border border-dashed border-white/10 animate-[spin_80s_linear_infinite]"
+          style={{ inset: "20%", borderWidth: 1.5 }} />
+        <div className="absolute rounded-full border border-white/[0.06]"
+          style={{ inset: "8%" }} />
+
+        {/* Center */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+          {active ? (
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="flex flex-col items-center justify-center rounded-full shadow-[0_0_50px_15px_rgba(244,63,94,0.35)]"
+              style={{
+                width: 110, height: 110,
+                background: "radial-gradient(circle at 35% 35%, #fb7185, #e11d48)",
+              }}
+            >
+              <active.icon className="w-8 h-8 text-white" />
+              <span className="text-white text-[9px] font-bold mt-1 text-center leading-tight px-2">
+                {lang === "es" ? active.name : active.nameEn}
+              </span>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="flex flex-col items-center justify-center rounded-full shadow-[0_0_60px_20px_rgba(244,63,94,0.35)]"
+              style={{
+                width: 110, height: 110,
+                background: "radial-gradient(circle at 35% 35%, #fb7185, #e11d48)",
+              }}
+            >
+              <span className="text-white font-black text-base leading-tight">SYSDE</span>
+              <span className="text-white font-black text-base leading-tight">SAF+</span>
+            </motion.div>
+          )}
+          <div className="absolute inset-0 rounded-full bg-rose-500/20 blur-2xl -z-10 animate-pulse" />
+        </div>
+
+        {/* Modules / Sub-items */}
+        {!active
+          ? modules.map((mod, i) => {
+              const angleRad = (mod.angle * Math.PI) / 180;
+              const x = 50 + radius * Math.cos(angleRad);
+              const y = 50 + radius * Math.sin(angleRad);
+              const Icon = mod.icon;
+              return (
+                <motion.button
+                  key={mod.id}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.15 + i * 0.06, type: "spring", stiffness: 200 }}
+                  whileHover={{ scale: 1.15 }}
+                  onClick={() => handleClick(mod)}
+                  className="absolute z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group"
+                  style={{ left: `${x}%`, top: `${y}%` }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-white/5 border-2 border-white/15 hover:border-rose-400 hover:bg-rose-500/20 flex items-center justify-center shadow-lg transition-all duration-300 group-hover:shadow-rose-500/30">
+                    <Icon className="w-5 h-5 text-rose-400" />
+                  </div>
+                  <span className="mt-1.5 text-[10px] font-medium text-white/60 group-hover:text-white text-center leading-tight max-w-[80px] transition-colors">
+                    {lang === "es" ? mod.name : mod.nameEn}
+                  </span>
+                </motion.button>
+              );
+            })
+          : active.subItems.map((item, i) => {
+              const total = active.subItems.length;
+              const angle = (i * 360) / total - 90;
+              const angleRad = (angle * Math.PI) / 180;
+              const x = 50 + radius * Math.cos(angleRad);
+              const y = 50 + radius * Math.sin(angleRad);
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.07, type: "spring", stiffness: 200 }}
+                  className="absolute z-10 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group"
+                  style={{ left: `${x}%`, top: `${y}%` }}
+                >
+                  <div className="w-11 h-11 rounded-full bg-white/5 border-2 border-rose-400/30 hover:border-rose-400 hover:bg-rose-500/20 flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-110 cursor-default">
+                    <Circle className="w-2.5 h-2.5 text-rose-400 fill-rose-400" />
+                  </div>
+                  <span className="mt-1.5 text-[10px] font-medium text-white/60 group-hover:text-white text-center leading-tight max-w-[80px] transition-colors">
+                    {lang === "es" ? item.name : item.nameEn}
+                  </span>
+                  {/* Connection line */}
+                  <svg className="absolute pointer-events-none -z-10"
+                    style={{ width: 200, height: 200, left: "50%", top: "50%", transform: "translate(-50%,-50%)" }}>
+                    <line
+                      x1="100" y1="100"
+                      x2={100 + (50 - x) * 2}
+                      y2={100 + (50 - y) * 2}
+                      stroke="rgba(244,63,94,0.2)"
+                      strokeWidth="1"
+                      strokeDasharray="4 4"
+                    />
+                  </svg>
+                </motion.div>
+              );
+            })
+        }
+      </div>
     </div>
   );
 };
