@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { usePresentationLanguage } from "../hooks/usePresentationLanguage";
 import { Smartphone, Monitor, Globe, QrCode, Fingerprint, Bell, CreditCard } from "lucide-react";
 
@@ -22,8 +23,24 @@ const mobileFeatures = [
   { icon: CreditCard,  es: "Gestión de tarjetas", en: "Card management" },
 ];
 
+const rotatingChannels = [
+  { emoji: "💬", es: "WhatsApp", en: "WhatsApp" },
+  { emoji: "✈️", es: "Telegram", en: "Telegram" },
+  { emoji: "📞", es: "Llamadas", en: "Calls" },
+  { emoji: "📱", es: "SMS", en: "SMS" },
+  { emoji: "📧", es: "Email", en: "Email" },
+];
+
 const CanalesSlide = () => {
   const { t } = usePresentationLanguage();
+  const [activeChannel, setActiveChannel] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveChannel((prev) => (prev + 1) % rotatingChannels.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="w-full h-full bg-white flex flex-col justify-center px-16 py-10 relative overflow-hidden">
@@ -69,7 +86,38 @@ const CanalesSlide = () => {
 
           {/* Right column */}
           <div>
-            <p className="text-gray-400 text-xs uppercase tracking-widest mb-4">{t("Funcionalidades clave", "Key features")}</p>
+            {/* Rotating channel showcase */}
+            <div className="mb-5 rounded-2xl p-5 text-center" style={{ background: `${PRIMARY}08`, border: `1.5px solid ${PRIMARY}20` }}>
+              <p className="text-gray-400 text-xs uppercase tracking-widest mb-3">{t("Comunicación en tiempo real", "Real-time communication")}</p>
+              <div className="h-16 flex items-center justify-center overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeChannel}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="text-4xl">{rotatingChannels[activeChannel].emoji}</span>
+                    <span className="text-xl font-black" style={{ color: PRIMARY }}>
+                      {t(rotatingChannels[activeChannel].es, rotatingChannels[activeChannel].en)}
+                    </span>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              <div className="flex justify-center gap-1.5 mt-3">
+                {rotatingChannels.map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                    style={{ background: i === activeChannel ? PRIMARY : `${PRIMARY}30` }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <p className="text-gray-400 text-xs uppercase tracking-widest mb-3">{t("Funcionalidades clave", "Key features")}</p>
             <div className="grid grid-cols-2 gap-3 mb-5">
               {mobileFeatures.map((f, i) => {
                 const Icon = f.icon;
@@ -79,10 +127,10 @@ const CanalesSlide = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4 + i * 0.08 }}
-                    className="bg-gray-50 border border-gray-100 rounded-xl p-4 flex flex-col items-center gap-2 text-center hover:border-red-200 transition-all"
+                    className="bg-gray-50 border border-gray-100 rounded-xl p-3 flex flex-col items-center gap-2 text-center hover:border-red-200 transition-all"
                   >
-                    <Icon className="w-6 h-6" style={{ color: PRIMARY }} />
-                    <p className="text-gray-700 text-xs font-medium">{t(f.es, f.en)}</p>
+                    <Icon className="w-5 h-5" style={{ color: PRIMARY }} />
+                    <p className="text-gray-700 text-[11px] font-medium">{t(f.es, f.en)}</p>
                   </motion.div>
                 );
               })}
