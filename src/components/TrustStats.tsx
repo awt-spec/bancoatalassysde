@@ -44,7 +44,7 @@ const TrustStats = () => {
           {title}
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-6 justify-center items-center max-w-4xl mx-auto">
           {/* Usuarios */}
           <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-10 border border-primary-foreground/20">
             <Users className="h-10 w-10 text-primary-foreground/70 mx-auto mb-4" />
