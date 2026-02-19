@@ -49,7 +49,7 @@ const TrustStats = () => {
           <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-10 border border-primary-foreground/20">
             <Users className="h-10 w-10 text-primary-foreground/70 mx-auto mb-4" />
             <p className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-2">
-              145M
+              +145M
             </p>
             <p className="text-primary-foreground/70 text-lg">
               {usersLabel}
@@ -60,7 +60,7 @@ const TrustStats = () => {
           <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-10 border border-primary-foreground/20">
             <DollarSign className="h-10 w-10 text-primary-foreground/70 mx-auto mb-4" />
             <p className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary-foreground mb-2">
-              USD 655.4B
+              USD +655.4B
             </p>
             <p className="text-primary-foreground/70 text-lg">
               {assetsLabel}
