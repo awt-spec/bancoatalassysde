@@ -21,6 +21,7 @@ const integrationGroups = [
   { category: "Regulatorios", color: "#9f1239", items: ["Superintendencias", "Bancos centrales", "Reportería oficial", "entre otros…"] },
   { category: "Notificaciones", color: "#065f46", items: ["SMS", "WhatsApp Business", "Email", "Push", "entre otros…"] },
   { category: "Autenticación", color: "#1e3a8a", items: ["Azure AD", "Okta", "SSO corporativos", "entre otros…"] },
+  { category: "Desarrollos internos Banco Atlas", color: "#0c4a6e", items: ["Sistemas propios", "APIs internas", "Plataformas legacy", "entre otros…"] },
 ];
 
 const COLS = 4;
