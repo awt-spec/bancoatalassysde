@@ -6,22 +6,21 @@ import { Plug, ChevronLeft, ChevronRight } from "lucide-react";
 const PRIMARY = "#cd1b3b";
 
 const integrationGroups = [
-  { category: "CRM", color: "#1e40af", items: ["Salesforce", "Microsoft Dynamics", "HubSpot"] },
-  { category: "ERP / Contabilidad", color: "#047857", items: ["SAP", "Oracle EBS", "Microsoft Dynamics 365"] },
-  { category: "Core Bancario", color: PRIMARY, items: ["Temenos", "Finacle", "Cobis", "Bantotal"] },
-  { category: "Centrales de Riesgo", color: "#7c3aed", items: ["Equifax", "TransUnion", "Experian", "CIC"] },
-  { category: "Bureaus de Identidad", color: "#b45309", items: ["Registro Civil", "RENAP", "TSE"] },
-  { category: "Procesadores de Tarjetas", color: "#0f766e", items: ["Visa", "Mastercard", "Redes locales"] },
-  { category: "Pasarelas de Pago", color: "#be185d", items: ["PayPal", "Stripe", "SINPE", "ACH"] },
-  { category: "Sistemas de Cobranza", color: "#92400e", items: ["Colsys", "Sistemas externos de mora"] },
-  { category: "Scoring / Inteligencia", color: "#1d4ed8", items: ["Scoring externos", "Modelos de IA"] },
-  { category: "Banca Digital", color: "#6d28d9", items: ["Apps móviles", "Banca en línea"] },
-  { category: "Seguros", color: "#0e7490", items: ["Aseguradoras", "Primas y siniestros"] },
-  { category: "Documentos y Firma", color: "#4f7942", items: ["DocuSign", "Adobe Sign", "Gestores documentales"] },
-  { category: "ERP de Retail", color: "#b45309", items: ["Sistemas POS", "Plataformas de comercio"] },
-  { category: "Regulatorios", color: "#9f1239", items: ["Superintendencias", "Bancos centrales", "Reportería oficial"] },
-  { category: "Notificaciones", color: "#065f46", items: ["SMS", "WhatsApp Business", "Email", "Push"] },
-  { category: "Autenticación", color: "#1e3a8a", items: ["Azure AD", "Okta", "SSO corporativos"] },
+  { category: "CRM", color: "#1e40af", items: ["Salesforce", "Microsoft Dynamics", "HubSpot", "entre otros…"] },
+  { category: "ERP / Contabilidad", color: "#047857", items: ["SAP", "Oracle EBS", "Microsoft Dynamics 365", "entre otros…"] },
+  { category: "Centrales de Riesgo", color: "#7c3aed", items: ["Equifax", "TransUnion", "Experian", "CIC", "entre otros…"] },
+  { category: "Bureaus de Identidad", color: "#b45309", items: ["Registro Civil", "RENAP", "TSE", "entre otros…"] },
+  { category: "Procesadores de Tarjetas", color: "#0f766e", items: ["Visa", "Mastercard", "Redes locales", "entre otros…"] },
+  { category: "Pasarelas de Pago", color: "#be185d", items: ["PayPal", "Stripe", "SINPE", "ACH", "entre otros…"] },
+  { category: "Sistemas de Cobranza", color: "#92400e", items: ["Colsys", "Sistemas externos de mora", "entre otros…"] },
+  { category: "Scoring / Inteligencia", color: "#1d4ed8", items: ["Scoring externos", "Modelos de IA", "entre otros…"] },
+  { category: "Banca Digital", color: "#6d28d9", items: ["Apps móviles", "Banca en línea", "entre otros…"] },
+  { category: "Seguros", color: "#0e7490", items: ["Aseguradoras", "Primas y siniestros", "entre otros…"] },
+  { category: "Documentos y Firma", color: "#4f7942", items: ["DocuSign", "Adobe Sign", "Gestores documentales", "entre otros…"] },
+  { category: "ERP de Retail", color: "#b45309", items: ["Sistemas POS", "Plataformas de comercio", "entre otros…"] },
+  { category: "Regulatorios", color: "#9f1239", items: ["Superintendencias", "Bancos centrales", "Reportería oficial", "entre otros…"] },
+  { category: "Notificaciones", color: "#065f46", items: ["SMS", "WhatsApp Business", "Email", "Push", "entre otros…"] },
+  { category: "Autenticación", color: "#1e3a8a", items: ["Azure AD", "Okta", "SSO corporativos", "entre otros…"] },
 ];
 
 const COLS = 4;
