@@ -14,49 +14,127 @@ const cards: ConfigCard[] = [
     emoji: "🌐",
     title: "Multi-Idioma",
     description: "Soporte para múltiples idiomas con selección por banderas.",
-    options: ["Español", "Inglés", "Francés", "Portugués"],
+    options: ["🇪🇸 Español", "🇺🇸 Inglés", "🇫🇷 Francés", "🇵🇹 Portugués", "🇩🇪 Alemán", "🇨🇳 Chino"],
   },
   {
     emoji: "💱",
     title: "Multi-Moneda",
     description: "Configura múltiples monedas con fuentes de fondos.",
-    options: ["USD", "EUR", "MXN", "PYG", "COP"],
+    options: ["🇺🇸 USD — Dólar", "🇪🇺 EUR — Euro", "🇲🇽 MXN — Peso Mexicano", "🇵🇾 PYG — Guaraní", "🇨🇴 COP — Peso Colombiano", "🇨🇷 CRC — Colón", "🇧🇷 BRL — Real"],
   },
   {
     emoji: "✅",
     title: "Niveles de Aprobación",
     description: "Define los niveles de aprobación requeridos para el producto crediticio.",
-    options: ["Automático", "Un nivel", "Dos niveles", "Comité"],
+    options: [
+      "Nivel 1 — Ejecutivo / Asesor (pre-evaluación)",
+      "Nivel 2 — Supervisor / Jefe de crédito",
+      "Nivel 3 — Gerente de crédito (montos medios)",
+      "Nivel 4 — Comité de crédito (montos altos)",
+      "Nivel 5 — Gerencia General (créditos especiales)",
+      "Nivel 6 — Junta Directiva (corporativos)",
+      "Por monto — techo por nivel",
+      "Por tipo de producto",
+      "Por perfil de riesgo / score",
+      "Por plazo del crédito",
+      "Por garantía insuficiente",
+      "Por sector económico restringido",
+      "Por cliente nuevo vs recurrente",
+      "Por historial de mora",
+      "Aprobación secuencial",
+      "Aprobación paralela",
+      "Aprobación por excepción",
+      "Auto-aprobación por motor de reglas",
+      "Aprobación por comité virtual (votación digital)",
+      "Aprobación con condicionantes",
+      "Rechazo con causa registrada",
+      "Devolución para corrección",
+      "Override de nivel superior",
+      "Escalamiento automático por alertas",
+      "Vencimiento de bandeja (escala o cancela)",
+      "Delegación temporal de nivel",
+      "Auditoría completa de decisiones",
+      "Aprobación con firma digital",
+    ],
   },
   {
     emoji: "💳",
     title: "Tipo de Pago",
-    description: "Cuota fija, multi-período, pago globo, pago global y más.",
-    options: ["Cuota fija", "Multi-período", "Pago globo", "Pago global", "Bullet"],
+    description: "Sistema Francés, Alemán, Americano, Bullet, escalonado y más.",
+    options: [
+      "Sistema Francés — cuota fija, capital creciente, interés decreciente",
+      "Sistema Alemán — capital fijo, cuota decreciente",
+      "Sistema Americano / Pago Globo — solo intereses + capital al final",
+      "Pago Bullet — capital + intereses al vencimiento (un solo pago)",
+      "Cuota irregular / Personalizada — calendario libre definido manualmente",
+      "Pago en Globo parcial — cuotas bajas + globo grande al final",
+      "Cuota escalonada — aumenta o disminuye según etapas (construcción)",
+      "Período de gracia total — sin capital ni intereses por X meses",
+      "Período de gracia parcial — solo intereses, sin amortizar capital",
+      "Cuota variable agrícola — ajustada al ciclo de cosecha",
+    ],
   },
   {
     emoji: "⚙️",
     title: "Modo de Cobro",
-    description: "Configura el método de cobro vertical u horizontalmente.",
-    options: ["Vertical", "Horizontal", "Mixto"],
+    description: "Por canal, momento del cobro, automatización y eventos especiales.",
+    options: [
+      "Débito automático en cuenta corriente o ahorro",
+      "Descuento por planilla / nómina",
+      "Pago en caja / ventanilla presencial",
+      "Pago en efectivo",
+      "Pago con cheque",
+      "Transferencia bancaria (SINPE, ACH, Swift)",
+      "Pago por banca en línea / app móvil",
+      "Pago en puntos de recaudación externos (corresponsales, supermercados)",
+      "Pago con tarjeta de débito o crédito",
+      "Pago por código QR",
+      "Cobro al vencimiento",
+      "Cobro anticipado",
+      "Cobro retroactivo / en mora con recargo moratorio",
+      "Manual — ejecutivo registra el pago",
+      "Semiautomático — el sistema genera, usuario confirma",
+      "Automático / batch nocturno",
+      "Pago parcial — abono menor a la cuota",
+      "Pago extraordinario — reduce capital o acorta plazo",
+      "Cancelación anticipada total",
+      "Refinanciamiento / reestructuración",
+      "Condonación — perdón total o parcial",
+      "Dación en pago — entrega de bien en lugar de dinero",
+    ],
   },
   {
     emoji: "📅",
     title: "Calendario y Frecuencia",
-    description: "Calendario de pagos y frecuencia (semanal, quincenal, mensual, etc.).",
-    options: ["Semanal", "Quincenal", "Mensual", "Bimestral", "Anual"],
+    description: "Calendario de pagos y frecuencia de cuotas.",
+    options: ["Semanal", "Quincenal", "Mensual", "Bimestral", "Trimestral", "Semestral", "Anual"],
   },
   {
     emoji: "📊",
     title: "Configuración de Intereses",
-    description: "Tipo de interés ordinario (fijo o variable), tasas de mora.",
-    options: ["Interés fijo", "Interés variable", "Tasa mora", "Tasa penalidad"],
+    description: "Tipo, base de cálculo, momento de cobro y tasas especiales.",
+    options: [
+      "Tasa Fija — no cambia durante toda la vida del préstamo",
+      "Tasa Variable — se ajusta según índice de referencia (TBP, BCP, LIBOR)",
+      "Tasa Mixta — fija por período inicial, luego variable",
+      "Tasa Nominal — tasa pactada sin considerar capitalización",
+      "Tasa Efectiva (TEA / TIR) — incluye efecto de capitalización",
+      "Tasa de Interés Total Anual (TITA) — intereses + comisiones + seguros",
+      "Interés sobre saldo — sobre capital pendiente (estándar)",
+      "Interés sobre saldo original — siempre sobre monto inicial",
+      "Interés adelantado — cobrado al inicio (descuento comercial)",
+      "Interés vencido — cobrado al final del período",
+      "Tasa moratoria / punitoria — sobre deuda vencida",
+      "Tasa preferencial — para vivienda social, agrícola, PYME",
+      "Tasa indexada — ligada a inflación o tipo de cambio",
+      "Tasa subsidiada — diferencial cubierto por Estado / AFD / BANHVI",
+    ],
   },
   {
     emoji: "🛡️",
     title: "Requisitos y Garantías",
     description: "Requisitos de elegibilidad y garantías aceptables.",
-    options: ["Garantía hipotecaria", "Garantía prendaria", "Aval", "Sin garantía"],
+    options: ["Garantía hipotecaria", "Garantía prendaria", "Aval", "Sin garantía", "Garantía líquida (depósito)", "Garantía fiduciaria"],
   },
 ];
 
@@ -119,13 +197,13 @@ const LoanConfigSlide = () => {
                       transition={{ duration: 0.25 }}
                       className="overflow-hidden"
                     >
-                      <div className="mt-3 pt-3 border-t border-border flex flex-col gap-1.5">
+                      <div className="mt-3 pt-3 border-t border-border flex flex-col gap-1.5 max-h-48 overflow-y-auto">
                         {card.options.map((opt, j) => (
                           <div
                             key={j}
-                            className="flex items-center gap-2 text-xs text-foreground bg-muted/50 rounded-lg px-3 py-1.5"
+                            className="flex items-start gap-2 text-xs text-foreground bg-muted/50 rounded-lg px-3 py-1.5"
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0 mt-1" />
                             {opt}
                           </div>
                         ))}
