@@ -392,8 +392,8 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
       <div className="flex-1 flex flex-col items-center justify-center p-3">
         <p className="text-xs font-bold text-gray-700 mb-2">{sec.label}</p>
         <div className="relative mx-auto" style={{ width: svgSize, height: svgSize }}>
-          {/* Orbit ring */}
-          <div className="absolute rounded-full animate-[spin_20s_linear_infinite]"
+          {/* Orbit ring — static */}
+          <div className="absolute rounded-full"
             style={{
               width: orbitR * 2, height: orbitR * 2,
               top: cy - orbitR, left: cx - orbitR,
