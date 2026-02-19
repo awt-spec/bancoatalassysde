@@ -356,68 +356,80 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
     automatizacion: { label: "Automatización", items: cobro_automatizacion, color: "#1f4a2e" },
     especiales: { label: "Eventos Especiales", items: cobro_especiales, color: PRIMARY },
   };
-  const current = sectionData[activeSection];
-  const centerSize = 90;
-  const orbitR = 130;
-  const svgSize = 320;
-  const items = current.items;
+  const sec = sectionData[activeSection];
+  const centerSize = 80;
+  const orbitR = 120;
+  const svgSize = 300;
+  const cx = svgSize / 2;
+  const items = sec.items;
 
   return (
-    <div className="absolute inset-0 z-50 bg-white/98 backdrop-blur-sm flex flex-col overflow-hidden rounded-2xl">
-      <div className="flex items-center justify-between px-6 py-3 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-muted transition-colors">
-            <ArrowLeft className="w-4 h-4 text-muted-foreground" />
+    <div className="absolute inset-0 z-50 flex flex-col overflow-hidden rounded-2xl shadow-2xl"
+      style={{ background: "linear-gradient(135deg, #fff 0%, #fff5f6 100%)", border: `1.5px solid ${PRIMARY}22` }}>
+      <div className="flex items-center justify-between px-5 py-3 flex-shrink-0"
+        style={{ borderBottom: `1px solid ${PRIMARY}18`, background: `${PRIMARY}06` }}>
+        <div className="flex items-center gap-2">
+          <button onClick={onClose} className="p-1.5 rounded-full transition-colors hover:bg-red-50"
+            style={{ border: `1px solid ${PRIMARY}30` }}>
+            <ArrowLeft className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
           </button>
-          <span className="font-bold text-foreground text-sm">⚙️ Modo de Cobro</span>
+          <span className="font-bold text-sm text-gray-900">⚙️ Modo de Cobro</span>
         </div>
         <div className="flex gap-1 flex-wrap justify-end">
-          {(Object.keys(sectionData) as (keyof typeof sectionData)[]).map(sec => (
-            <button key={sec} onClick={() => setActiveSection(sec)}
-              className="text-[10px] px-2.5 py-1 rounded-full font-medium transition-colors"
-              style={activeSection === sec ? { background: current.color, color: "#fff" } : { background: "#f3f4f6", color: "#6b7280" }}>
-              {sectionData[sec].label.split(" ")[0]}
+          {(Object.keys(sectionData) as (keyof typeof sectionData)[]).map(s => (
+            <button key={s} onClick={() => setActiveSection(s)}
+              className="text-[10px] px-2.5 py-1 rounded-full font-medium transition-all"
+              style={activeSection === s
+                ? { background: sectionData[s].color, color: "#fff", boxShadow: `0 2px 8px ${sectionData[s].color}40` }
+                : { background: "#f3f4f6", color: "#6b7280" }}>
+              {sectionData[s].label.split(" ")[0]}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center gap-2 p-4">
-        <p className="text-xs font-bold text-foreground">{current.label}</p>
+      <div className="flex-1 flex flex-col items-center justify-center p-3">
+        <p className="text-xs font-bold text-gray-700 mb-2">{sec.label}</p>
         <div className="relative" style={{ width: svgSize, height: svgSize }}>
-          {/* Orbit ring (spinning) */}
+          {/* Orbit ring */}
           <div className="absolute rounded-full animate-[spin_20s_linear_infinite]"
             style={{
-              inset: `${svgSize / 2 - orbitR}px`,
-              border: `1.5px dashed ${current.color}44`,
+              width: orbitR * 2, height: orbitR * 2,
+              top: cx - orbitR, left: cx - orbitR,
+              border: `1.5px dashed ${sec.color}55`,
             }} />
 
           {/* Center */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full flex flex-col items-center justify-center shadow-lg"
-            style={{ width: centerSize, height: centerSize, background: current.color }}>
-            <span className="text-white font-black text-[10px] text-center px-2 leading-tight">{current.label}</span>
+          <div
+            className="absolute rounded-full flex flex-col items-center justify-center shadow-lg z-10"
+            style={{
+              width: centerSize, height: centerSize,
+              top: cx - centerSize / 2, left: cx - centerSize / 2,
+              background: sec.color,
+            }}>
+            <span className="text-white font-black text-[9px] text-center px-2 leading-tight">{sec.label}</span>
           </div>
 
           {/* Satellite nodes */}
           {items.map((item, i) => {
             const angle = (i * 360) / items.length - 90;
             const rad = (angle * Math.PI) / 180;
-            const x = 50 + (orbitR / svgSize) * 100 * Math.cos(rad);
-            const y = 50 + (orbitR / svgSize) * 100 * Math.sin(rad);
+            const nx = cx + orbitR * Math.cos(rad);
+            const ny = cx + orbitR * Math.sin(rad);
             return (
               <motion.div
-                key={i}
+                key={`${activeSection}-${i}`}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05 }}
-                className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
-                style={{ left: `${x}%`, top: `${y}%` }}
+                transition={{ delay: i * 0.05, type: "spring", stiffness: 200 }}
+                className="absolute flex flex-col items-center"
+                style={{ left: nx, top: ny, transform: "translate(-50%, -50%)" }}
               >
-                <div className="w-11 h-11 rounded-full flex items-center justify-center shadow-sm text-lg"
-                  style={{ background: "#fff", border: `2px solid ${current.color}55` }}>
+                <div className="w-11 h-11 rounded-full flex items-center justify-center shadow-sm text-base bg-white"
+                  style={{ border: `2px solid ${sec.color}55` }}>
                   {item.emoji}
                 </div>
-                <span className="text-[9px] text-muted-foreground text-center leading-tight max-w-[60px] mt-0.5">
+                <span className="text-[9px] text-gray-500 text-center leading-tight max-w-[64px] mt-0.5">
                   {item.label}
                 </span>
               </motion.div>
@@ -429,13 +441,12 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
             {items.map((_, i) => {
               const angle = (i * 360) / items.length - 90;
               const rad = (angle * Math.PI) / 180;
-              const cx = svgSize / 2;
               return (
                 <line key={i}
                   x1={cx} y1={cx}
                   x2={cx + orbitR * Math.cos(rad)}
                   y2={cx + orbitR * Math.sin(rad)}
-                  stroke={`${current.color}22`} strokeWidth="1" strokeDasharray="3 3" />
+                  stroke={`${sec.color}25`} strokeWidth="1" strokeDasharray="3 3" />
               );
             })}
           </svg>
