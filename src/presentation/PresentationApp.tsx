@@ -4,9 +4,6 @@ import { ChevronLeft, ChevronRight, X, Maximize2, Minimize2, Globe } from "lucid
 import { PresentationLangProvider, usePresentationLanguage } from "./hooks/usePresentationLanguage";
 import OperationalSequenceSlide from "./slides/OperationalSequenceSlide";
 import LoanConfigSlide from "./slides/LoanConfigSlide";
-import CuentasSlide from "./slides/CuentasSlide";
-import CreditosSlide from "./slides/CreditosSlide";
-import PagosSlide from "./slides/PagosSlide";
 import CanalesSlide from "./slides/CanalesSlide";
 import ReportingSlide from "./slides/ReportingSlide";
 import ComplianceSlide from "./slides/ComplianceSlide";
@@ -40,7 +37,7 @@ function getExit(dir: Direction) {
   return "exitZoomIn";
 }
 
-const TOTAL_SLIDES = 9;
+const TOTAL_SLIDES = 6;
 
 function PresentationInner({ onClose }: { onClose: () => void }) {
   const [current, setCurrent] = useState(0);
@@ -93,9 +90,6 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
   const slides = [
     <OperationalSequenceSlide key="operacional" />,
     <LoanConfigSlide key="loanconfig" />,
-    <CuentasSlide key="cuentas" />,
-    <CreditosSlide key="creditos" />,
-    <PagosSlide key="pagos" />,
     <CanalesSlide key="canales" />,
     <ReportingSlide key="reporting" />,
     <ComplianceSlide key="compliance" />,
