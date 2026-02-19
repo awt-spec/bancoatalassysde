@@ -56,6 +56,21 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
   const next = useCallback(() => navigate(current + 1, "right"), [current, navigate]);
   const prev = useCallback(() => navigate(current - 1, "left"), [current, navigate]);
 
+  // Auto-fullscreen on mount
+  useEffect(() => {
+    const enterFullscreen = async () => {
+      try {
+        if (containerRef.current && !document.fullscreenElement) {
+          await containerRef.current.requestFullscreen();
+          setIsFullscreen(true);
+        }
+      } catch (err) {
+        // Fullscreen may be blocked by browser policy
+      }
+    };
+    enterFullscreen();
+  }, []);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); next(); }
@@ -69,6 +84,13 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
 
   // Swipe
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+  // Sync fullscreen state when exiting via browser
+  useEffect(() => {
+    const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", onFsChange);
+    return () => document.removeEventListener("fullscreenchange", onFsChange);
+  }, []);
+
   const onTouchStart = (e: React.TouchEvent) => {
     touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
   };
