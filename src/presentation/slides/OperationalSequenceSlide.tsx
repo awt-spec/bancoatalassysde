@@ -277,8 +277,10 @@ const PrestamosView = ({ onBack, onSelectConsumo }: { onBack: () => void; onSele
   const types = [
     { label: "Préstamos de\nConsumo", active: true, onClick: onSelectConsumo },
     { label: "Préstamos\nComerciales", active: false, onClick: () => {} },
-    { label: "Préstamos\nPuente",      active: false, onClick: () => {} },
-    { label: "Préstamos\nRetail",      active: false, onClick: () => {} },
+    { label: "Préstamos\nHipotecarios", active: false, onClick: () => {} },
+    { label: "Préstamos\nNómina", active: false, onClick: () => {} },
+    { label: "Préstamos\nPuente", active: false, onClick: () => {} },
+    { label: "Préstamos\nRetail", active: false, onClick: () => {} },
   ];
   return (
     <div className="flex flex-col items-center gap-6 pt-4 pb-8">
