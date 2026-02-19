@@ -358,8 +358,8 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
   };
   const sec = sectionData[activeSection];
   const centerSize = 80;
-  const orbitR = 120;
-  const svgSize = 300;
+  const orbitR = 130;
+  const svgSize = 380;
   const cx = svgSize / 2;
   const items = sec.items;
 
