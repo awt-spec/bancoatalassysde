@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { usePresentationLanguage } from "../hooks/usePresentationLanguage";
 import { BarChart3 } from "lucide-react";
 
+const PRIMARY = "#cd1b3b";
+
 const reports = [
   { es: "Estados financieros NIIF", en: "IFRS Financial statements", category: "Contabilidad" },
   { es: "Cartera de crédito", en: "Credit portfolio", category: "Regulatorio" },
@@ -14,31 +16,33 @@ const reports = [
 ];
 
 const categoryColors: Record<string, string> = {
-  Contabilidad: "bg-pink-600/20 text-pink-400 border-pink-500/30",
-  Regulatorio: "bg-red-600/20 text-red-400 border-red-500/30",
-  Tesorería: "bg-blue-600/20 text-blue-400 border-blue-500/30",
-  Riesgo: "bg-amber-600/20 text-amber-400 border-amber-500/30",
-  Crédito: "bg-violet-600/20 text-violet-400 border-violet-500/30",
-  BI: "bg-pink-700/20 text-pink-300 border-pink-600/30",
+  Contabilidad: "bg-red-50 text-red-600 border-red-200",
+  Regulatorio:  "bg-rose-50 text-rose-600 border-rose-200",
+  Tesorería:    "bg-blue-50 text-blue-600 border-blue-200",
+  Riesgo:       "bg-amber-50 text-amber-600 border-amber-200",
+  Crédito:      "bg-violet-50 text-violet-600 border-violet-200",
+  BI:           "bg-pink-50 text-pink-600 border-pink-200",
 };
+
+const barColors = ["#cd1b3b", "#e84b66", "#f4607a", "#a81530", "#cd1b3b", "#e84b66"];
 
 const ReportingSlide = () => {
   const { t } = usePresentationLanguage();
 
   return (
-    <div className="w-full h-full bg-[#1a0814] flex flex-col justify-center px-16 py-12 relative overflow-hidden">
-      <div className="absolute -top-32 -right-16 w-96 h-96 rounded-full bg-pink-600/20 blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-pink-900/20 blur-3xl" />
+    <div className="w-full h-full bg-white flex flex-col justify-center px-16 py-12 relative overflow-hidden">
+      <div className="absolute -top-24 -right-16 w-80 h-80 rounded-full opacity-10" style={{ background: PRIMARY, filter: "blur(80px)" }} />
+      <div className="absolute bottom-0 left-0 w-60 h-60 rounded-full opacity-5" style={{ background: PRIMARY, filter: "blur(60px)" }} />
 
       <div className="relative max-w-6xl mx-auto w-full">
         {/* Header */}
         <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="mb-10 flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-pink-600 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-md" style={{ background: PRIMARY }}>
             <BarChart3 className="w-7 h-7 text-white" />
           </div>
           <div>
-            <p className="text-pink-400 text-sm font-semibold uppercase tracking-widest">{t("Módulo", "Module")} 05</p>
-            <h2 className="text-3xl font-black text-white">{t("Reportería y BI", "Reporting & BI")}</h2>
+            <p className="text-sm font-semibold uppercase tracking-widest" style={{ color: PRIMARY }}>{t("Módulo", "Module")} 05</p>
+            <h2 className="text-3xl font-black text-gray-900">{t("Reportería y BI", "Reporting & BI")}</h2>
           </div>
         </motion.div>
 
@@ -47,9 +51,9 @@ const ReportingSlide = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="mb-8 bg-white/5 border border-white/10 rounded-2xl p-6"
+          className="mb-8 bg-gray-50 border border-gray-100 rounded-2xl p-6"
         >
-          <p className="text-white/50 text-xs uppercase tracking-widest mb-4">{t("Volumen de reportes por categoría", "Report volume by category")}</p>
+          <p className="text-gray-400 text-xs uppercase tracking-widest mb-4">{t("Volumen de reportes por categoría", "Report volume by category")}</p>
           <div className="flex items-end gap-3 h-24">
             {[85, 60, 45, 70, 55, 90].map((h, i) => (
               <motion.div
@@ -57,7 +61,8 @@ const ReportingSlide = () => {
                 initial={{ height: 0 }}
                 animate={{ height: `${h}%` }}
                 transition={{ delay: 0.4 + i * 0.1, type: "spring" }}
-                className="flex-1 rounded-t-lg bg-gradient-to-t from-pink-600 to-pink-400 opacity-80"
+                className="flex-1 rounded-t-lg opacity-80"
+                style={{ background: barColors[i] }}
               />
             ))}
           </div>
@@ -71,10 +76,10 @@ const ReportingSlide = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + i * 0.06 }}
-              className="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-4 py-3"
+              className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl px-4 py-3 hover:border-red-100 transition-all"
             >
-              <p className="text-white/80 text-sm">{t(r.es, r.en)}</p>
-              <span className={`text-xs px-2 py-1 rounded-full border ${categoryColors[r.category] || "bg-white/10 text-white/50"}`}>
+              <p className="text-gray-700 text-sm">{t(r.es, r.en)}</p>
+              <span className={`text-xs px-2 py-1 rounded-full border ${categoryColors[r.category] || "bg-gray-100 text-gray-500"}`}>
                 {r.category}
               </span>
             </motion.div>

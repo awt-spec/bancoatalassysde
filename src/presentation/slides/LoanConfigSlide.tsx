@@ -188,80 +188,93 @@ const cards: ConfigCard[] = [
 const NivelesZoom = ({ onClose }: { onClose: () => void }) => {
   const [activeTab, setActiveTab] = useState<"jerarquia" | "criterios" | "flujos">("jerarquia");
   return (
-    <div className="absolute inset-0 z-50 bg-white/98 backdrop-blur-sm flex flex-col overflow-hidden rounded-2xl">
+    <div className="absolute inset-0 z-50 flex flex-col overflow-hidden rounded-2xl shadow-2xl"
+      style={{ background: "linear-gradient(135deg, #fff 0%, #fff5f6 100%)", border: `1.5px solid ${PRIMARY}22` }}>
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-muted transition-colors">
-            <ArrowLeft className="w-4 h-4 text-muted-foreground" />
+      <div className="flex items-center justify-between px-5 py-3.5 flex-shrink-0"
+        style={{ borderBottom: `1px solid ${PRIMARY}18`, background: `${PRIMARY}06` }}>
+        <div className="flex items-center gap-2">
+          <button onClick={onClose} className="p-1.5 rounded-full transition-colors hover:bg-red-50"
+            style={{ border: `1px solid ${PRIMARY}30` }}>
+            <ArrowLeft className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
           </button>
-          <span className="font-bold text-foreground text-sm">✅ Niveles de Aprobación</span>
+          <span className="font-bold text-sm text-gray-900">✅ Niveles de Aprobación</span>
         </div>
         <div className="flex gap-1">
           {(["jerarquia", "criterios", "flujos"] as const).map(tab => (
             <button key={tab} onClick={() => setActiveTab(tab)}
-              className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors capitalize ${activeTab === tab ? "text-white" : "text-muted-foreground hover:text-foreground bg-muted"}`}
-              style={activeTab === tab ? { background: PRIMARY } : {}}
-            >
+              className="text-xs px-3 py-1.5 rounded-full font-medium transition-all"
+              style={activeTab === tab
+                ? { background: PRIMARY, color: "#fff", boxShadow: `0 2px 8px ${PRIMARY}40` }
+                : { background: "#f3f4f6", color: "#6b7280" }}>
               {tab === "jerarquia" ? "Jerarquía" : tab === "criterios" ? "Criterios" : "Flujos"}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-5">
         <AnimatePresence mode="wait">
           {activeTab === "jerarquia" && (
-            <motion.div key="jerarquia" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col gap-2">
-              <p className="text-xs text-muted-foreground mb-2 text-center">Pirámide de autorización — de menor a mayor</p>
-              <div className="flex flex-col items-center gap-1">
+            <motion.div key="jerarquia" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }} className="flex flex-col gap-2">
+              <p className="text-xs text-gray-400 mb-2 text-center font-medium">Pirámide de autorización — de menor a mayor</p>
+              <div className="flex flex-col items-center gap-1.5">
                 {[...approvalLevels].reverse().map((lv, i) => (
-                  <div key={i} className="rounded-xl px-4 py-2.5 flex items-center gap-3 transition-all"
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scaleX: 0.7 }}
+                    animate={{ opacity: 1, scaleX: 1 }}
+                    transition={{ delay: i * 0.06, type: "spring", stiffness: 200 }}
+                    className="rounded-xl px-4 py-2.5 flex items-center gap-3"
                     style={{
-                      width: `${55 + i * 7.5}%`,
-                      background: lv.color,
+                      width: `${52 + i * 8}%`,
+                      background: i >= 3 ? PRIMARY : `${PRIMARY}${['12','22','38'][i] || '22'}`,
                       color: i >= 3 ? "#fff" : "#1f2937",
                     }}>
-                    <span className="font-black text-xs w-8 flex-shrink-0">{lv.level}</span>
+                    <span className="font-black text-xs w-7 flex-shrink-0">{lv.level}</span>
                     <div>
                       <p className="font-bold text-xs">{lv.title}</p>
-                      <p className="text-[10px] opacity-70">{lv.desc}</p>
+                      <p className="text-[9px] opacity-70">{lv.desc}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
           )}
           {activeTab === "criterios" && (
-            <motion.div key="criterios" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <p className="text-xs text-muted-foreground mb-4 text-center">Condiciones que activan el escalamiento automático</p>
+            <motion.div key="criterios" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+              <p className="text-xs text-gray-400 mb-4 text-center">Condiciones que activan el escalamiento automático</p>
               <div className="grid grid-cols-2 gap-2">
                 {approvalCriteria.map((c, i) => (
-                  <div key={i} className="flex items-start gap-2 bg-muted/50 rounded-lg px-3 py-2.5 text-xs text-foreground">
+                  <motion.div key={i} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
+                    className="flex items-start gap-2 rounded-lg px-3 py-2.5 text-xs text-gray-700"
+                    style={{ background: `${PRIMARY}08`, border: `1px solid ${PRIMARY}18` }}>
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1" style={{ background: PRIMARY }} />
                     {c}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
               <div className="mt-3 rounded-xl px-4 py-3 text-xs text-white" style={{ background: PRIMARY }}>
-                <p className="font-bold mb-1">Eventos especiales del flujo</p>
-                <div className="flex flex-wrap gap-2">
+                <p className="font-bold mb-2">Eventos especiales del flujo</p>
+                <div className="flex flex-wrap gap-1.5">
                   {["Override de nivel superior", "Escalamiento automático", "Delegación temporal", "Auditoría completa", "Firma digital"].map((e, i) => (
-                    <span key={i} className="bg-white/20 rounded-full px-2 py-0.5">{e}</span>
+                    <span key={i} className="bg-white/20 rounded-full px-2.5 py-0.5">{e}</span>
                   ))}
                 </div>
               </div>
             </motion.div>
           )}
           {activeTab === "flujos" && (
-            <motion.div key="flujos" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <p className="text-xs text-muted-foreground mb-4 text-center">Tipos de flujo de aprobación disponibles</p>
+            <motion.div key="flujos" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+              <p className="text-xs text-gray-400 mb-4 text-center">Tipos de flujo de aprobación disponibles</p>
               <div className="grid grid-cols-2 gap-3">
                 {approvalFlows.map((f, i) => (
-                  <div key={i} className="rounded-xl border-2 px-4 py-3" style={{ borderColor: `${PRIMARY}44` }}>
-                    <p className="font-bold text-sm text-foreground">{f.type}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{f.desc}</p>
-                  </div>
+                  <motion.div key={i} initial={{ opacity: 0, scale: 0.93 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.07 }}
+                    className="rounded-xl px-4 py-3 border-l-4"
+                    style={{ borderLeftColor: PRIMARY, background: `${PRIMARY}06`, border: `1px solid ${PRIMARY}20`, borderLeft: `4px solid ${PRIMARY}` }}>
+                    <p className="font-bold text-sm text-gray-900">{f.type}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{f.desc}</p>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -276,39 +289,51 @@ const NivelesZoom = ({ onClose }: { onClose: () => void }) => {
 const TipoPagoZoom = ({ onClose }: { onClose: () => void }) => {
   const [selected, setSelected] = useState<number | null>(null);
   return (
-    <div className="absolute inset-0 z-50 bg-white/98 backdrop-blur-sm flex flex-col overflow-hidden rounded-2xl">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-muted transition-colors">
-            <ArrowLeft className="w-4 h-4 text-muted-foreground" />
+    <div className="absolute inset-0 z-50 flex flex-col overflow-hidden rounded-2xl shadow-2xl"
+      style={{ background: "linear-gradient(135deg, #fff 0%, #fff5f6 100%)", border: `1.5px solid ${PRIMARY}22` }}>
+      <div className="flex items-center justify-between px-5 py-3.5 flex-shrink-0"
+        style={{ borderBottom: `1px solid ${PRIMARY}18`, background: `${PRIMARY}06` }}>
+        <div className="flex items-center gap-2">
+          <button onClick={onClose} className="p-1.5 rounded-full transition-colors hover:bg-red-50"
+            style={{ border: `1px solid ${PRIMARY}30` }}>
+            <ArrowLeft className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
           </button>
-          <span className="font-bold text-foreground text-sm">💳 Sistemas de Amortización</span>
+          <span className="font-bold text-sm text-gray-900">💳 Sistemas de Amortización</span>
         </div>
         {selected !== null && (
-          <button onClick={() => setSelected(null)} className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+          <button onClick={() => setSelected(null)} className="text-xs text-gray-400 hover:text-gray-700 flex items-center gap-1">
             <X className="w-3 h-3" /> Cerrar detalle
           </button>
         )}
       </div>
       <div className="flex-1 overflow-y-auto p-4">
+        <p className="text-center text-xs text-gray-400 mb-3">Toca cada sistema para ver el detalle</p>
         <div className="grid grid-cols-2 gap-2">
           {paymentSystems.map((sys, i) => (
             <motion.button
               key={i}
               onClick={() => setSelected(selected === i ? null : i)}
-              className="text-left rounded-xl border-2 p-3 transition-all"
-              style={{ borderColor: selected === i ? PRIMARY : "#e5e7eb", background: selected === i ? `${PRIMARY}08` : "white" }}
+              className="text-left rounded-xl p-3 transition-all"
+              style={{
+                border: `1.5px solid ${selected === i ? PRIMARY : PRIMARY + "25"}`,
+                background: selected === i ? `${PRIMARY}0c` : "#fff",
+                boxShadow: selected === i ? `0 2px 12px ${PRIMARY}20` : "none",
+              }}
               whileHover={{ scale: 1.02 }}
             >
-              <p className="font-bold text-sm text-foreground">{sys.name}</p>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: selected === i ? PRIMARY : `${PRIMARY}55` }} />
+                <p className="font-bold text-sm text-gray-900">{sys.name}</p>
+              </div>
               <AnimatePresence>
                 {selected === i && (
                   <motion.p
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="text-xs text-muted-foreground mt-1.5 overflow-hidden"
-                    style={{ color: PRIMARY === "#cd1b3b" ? "#cd1b3b" : undefined }}
+                    transition={{ duration: 0.22 }}
+                    className="text-xs overflow-hidden pl-4"
+                    style={{ color: PRIMARY }}
                   >
                     {sys.detail}
                   </motion.p>
@@ -317,7 +342,6 @@ const TipoPagoZoom = ({ onClose }: { onClose: () => void }) => {
             </motion.button>
           ))}
         </div>
-        <p className="text-center text-xs text-muted-foreground mt-3">Toca cada sistema para ver el detalle</p>
       </div>
     </div>
   );
@@ -426,19 +450,22 @@ const InteresesZoom = ({ onClose }: { onClose: () => void }) => {
   const [activeGroup, setActiveGroup] = useState<number | null>(null);
   const group = activeGroup !== null ? intGrupos[activeGroup] : null;
   return (
-    <div className="absolute inset-0 z-50 bg-white/98 backdrop-blur-sm flex flex-col overflow-hidden rounded-2xl">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
-        <div className="flex items-center gap-3">
+    <div className="absolute inset-0 z-50 flex flex-col overflow-hidden rounded-2xl shadow-2xl"
+      style={{ background: "linear-gradient(135deg, #fff 0%, #fff5f6 100%)", border: `1.5px solid ${PRIMARY}22` }}>
+      <div className="flex items-center justify-between px-5 py-3.5 flex-shrink-0"
+        style={{ borderBottom: `1px solid ${PRIMARY}18`, background: `${PRIMARY}06` }}>
+        <div className="flex items-center gap-2">
           <button onClick={activeGroup !== null ? () => setActiveGroup(null) : onClose}
-            className="p-1.5 rounded-full hover:bg-muted transition-colors">
-            <ArrowLeft className="w-4 h-4 text-muted-foreground" />
+            className="p-1.5 rounded-full transition-colors hover:bg-red-50"
+            style={{ border: `1px solid ${PRIMARY}30` }}>
+            <ArrowLeft className="w-3.5 h-3.5" style={{ color: PRIMARY }} />
           </button>
-          <span className="font-bold text-foreground text-sm">
+          <span className="font-bold text-sm text-gray-900">
             📊 {group ? group.title : "Configuración de Intereses"}
           </span>
         </div>
         {activeGroup !== null && (
-          <button onClick={() => setActiveGroup(null)} className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
+          <button onClick={() => setActiveGroup(null)} className="text-xs text-gray-400 hover:text-gray-700 flex items-center gap-1">
             <X className="w-3 h-3" /> Ver todos
           </button>
         )}
@@ -447,8 +474,8 @@ const InteresesZoom = ({ onClose }: { onClose: () => void }) => {
       <div className="flex-1 overflow-y-auto p-5">
         <AnimatePresence mode="wait">
           {activeGroup === null ? (
-            <motion.div key="groups" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <p className="text-xs text-muted-foreground text-center mb-4">4 categorías · 14 variantes de tasas. Toca para explorar.</p>
+            <motion.div key="groups" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+              <p className="text-xs text-gray-400 text-center mb-4">4 categorías · 14 variantes de tasas. Toca para explorar.</p>
               <div className="grid grid-cols-2 gap-3">
                 {intGrupos.map((grp, i) => (
                   <motion.button
@@ -457,8 +484,8 @@ const InteresesZoom = ({ onClose }: { onClose: () => void }) => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
-                    whileHover={{ scale: 1.03 }}
-                    className="text-left rounded-2xl p-4 text-white shadow-md"
+                    whileHover={{ scale: 1.03, boxShadow: `0 4px 20px ${grp.color}40` }}
+                    className="text-left rounded-2xl p-4 text-white shadow-md transition-all"
                     style={{ background: grp.color }}
                   >
                     <p className="font-black text-sm mb-1">{grp.title}</p>
@@ -474,7 +501,7 @@ const InteresesZoom = ({ onClose }: { onClose: () => void }) => {
               </div>
             </motion.div>
           ) : (
-            <motion.div key={`group-${activeGroup}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div key={`group-${activeGroup}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
               <div className="flex flex-col gap-2">
                 {group!.items.map((item, i) => (
                   <motion.div
@@ -482,11 +509,11 @@ const InteresesZoom = ({ onClose }: { onClose: () => void }) => {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.07 }}
-                    className="rounded-xl p-3 border-l-4 bg-muted/30"
-                    style={{ borderColor: group!.color }}
+                    className="rounded-xl p-3 border-l-4"
+                    style={{ borderLeftColor: group!.color, background: `${group!.color}0a`, border: `1px solid ${group!.color}20`, borderLeft: `4px solid ${group!.color}` }}
                   >
-                    <p className="font-bold text-sm text-foreground">{item.name}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
+                    <p className="font-bold text-sm text-gray-900">{item.name}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
                   </motion.div>
                 ))}
               </div>
