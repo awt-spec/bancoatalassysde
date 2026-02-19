@@ -23,8 +23,8 @@ const features = [
     icon: Code2,
     es: "Todos los desarrollos requeridos",
     en: "All required developments",
-    desc_es: "Cada desarrollo necesario para cumplir la expectativa de Banco Atlas.",
-    desc_en: "Every development needed to meet Banco Atlas expectations.",
+    desc_es: "Cada desarrollo necesario para cumplir la expectativa de Banco Atlas, con un roadmap evolutivo específico para Banco Atlas.",
+    desc_en: "Every development needed to meet Banco Atlas expectations, with a dedicated evolutionary roadmap for Banco Atlas.",
   },
   {
     icon: GraduationCap,

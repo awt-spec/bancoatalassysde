@@ -358,9 +358,10 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
   };
   const sec = sectionData[activeSection];
   const centerSize = 80;
-  const orbitR = 130;
-  const svgSize = 380;
+  const orbitR = 120;
+  const svgSize = 420;
   const cx = svgSize / 2;
+  const cy = svgSize / 2;
   const items = sec.items;
 
   return (
@@ -390,12 +391,12 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
 
       <div className="flex-1 flex flex-col items-center justify-center p-3">
         <p className="text-xs font-bold text-gray-700 mb-2">{sec.label}</p>
-        <div className="relative" style={{ width: svgSize, height: svgSize }}>
+        <div className="relative mx-auto" style={{ width: svgSize, height: svgSize }}>
           {/* Orbit ring */}
           <div className="absolute rounded-full animate-[spin_20s_linear_infinite]"
             style={{
               width: orbitR * 2, height: orbitR * 2,
-              top: cx - orbitR, left: cx - orbitR,
+              top: cy - orbitR, left: cx - orbitR,
               border: `1.5px dashed ${sec.color}55`,
             }} />
 
@@ -404,7 +405,7 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
             className="absolute rounded-full flex flex-col items-center justify-center shadow-lg z-10"
             style={{
               width: centerSize, height: centerSize,
-              top: cx - centerSize / 2, left: cx - centerSize / 2,
+              top: cy - centerSize / 2, left: cx - centerSize / 2,
               background: sec.color,
             }}>
             <span className="text-white font-black text-[9px] text-center px-2 leading-tight">{sec.label}</span>
@@ -415,7 +416,7 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
             const angle = (i * 360) / items.length - 90;
             const rad = (angle * Math.PI) / 180;
             const nx = cx + orbitR * Math.cos(rad);
-            const ny = cx + orbitR * Math.sin(rad);
+            const ny = cy + orbitR * Math.sin(rad);
             return (
               <motion.div
                 key={`${activeSection}-${i}`}
@@ -443,9 +444,9 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
               const rad = (angle * Math.PI) / 180;
               return (
                 <line key={i}
-                  x1={cx} y1={cx}
+                  x1={cx} y1={cy}
                   x2={cx + orbitR * Math.cos(rad)}
-                  y2={cx + orbitR * Math.sin(rad)}
+                  y2={cy + orbitR * Math.sin(rad)}
                   stroke={`${sec.color}25`} strokeWidth="1" strokeDasharray="3 3" />
               );
             })}
