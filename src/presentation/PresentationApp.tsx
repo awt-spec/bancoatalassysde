@@ -8,6 +8,7 @@ import CanalesSlide from "./slides/CanalesSlide";
 import ReportingSlide from "./slides/ReportingSlide";
 import ComplianceSlide from "./slides/ComplianceSlide";
 import APISlide from "./slides/APISlide";
+import CoreBancarioSlide from "./slides/CoreBancarioSlide";
 
 type Direction = "left" | "right" | "zoom-in" | "zoom-out";
 
@@ -37,7 +38,7 @@ function getExit(dir: Direction) {
   return "exitZoomIn";
 }
 
-const TOTAL_SLIDES = 6;
+const TOTAL_SLIDES = 7;
 
 function PresentationInner({ onClose }: { onClose: () => void }) {
   const [current, setCurrent] = useState(0);
@@ -90,6 +91,7 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
   const slides = [
     <OperationalSequenceSlide key="operacional" />,
     <LoanConfigSlide key="loanconfig" />,
+    <CoreBancarioSlide key="ecosistema" />,
     <CanalesSlide key="canales" />,
     <ReportingSlide key="reporting" />,
     <ComplianceSlide key="compliance" />,
