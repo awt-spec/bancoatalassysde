@@ -4,6 +4,7 @@ import About from "@/components/About";
 import Solutions from "@/components/Solutions";
 import SAFPlusMap from "@/components/SAFPlusMap";
 import Clients from "@/components/Clients";
+import TrustStats from "@/components/TrustStats";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -14,6 +15,7 @@ const Index = () => {
         <Hero />
         <About />
         <Clients />
+        <TrustStats />
         <Solutions />
         <SAFPlusMap />
       </main>
