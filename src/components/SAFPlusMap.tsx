@@ -44,8 +44,10 @@ const modules: Module[] = [
 const SubSolarOverlay = ({
   title, items, onClose,
 }: { title: string; items: SubItem[]; onClose: () => void }) => {
-  const SIZE = 340;
-  const orbitR = 120;
+  const SIZE = 360;
+  const orbitR = 130;
+  const cx = SIZE / 2;
+  const cy = SIZE / 2;
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.88 }}
@@ -67,36 +69,35 @@ const SubSolarOverlay = ({
       </div>
 
       <div className="relative" style={{ width: SIZE, height: SIZE }}>
-        {/* Dashed orbit */}
+        {/* Dashed orbit — static, no spin */}
         <div
-          className="absolute rounded-full animate-[spin_40s_linear_infinite]"
+          className="absolute rounded-full"
           style={{
             width: orbitR * 2, height: orbitR * 2,
-            top: SIZE / 2 - orbitR, left: SIZE / 2 - orbitR,
+            top: cy - orbitR, left: cx - orbitR,
             border: `1.5px dashed ${PRIMARY}55`,
           }}
         />
 
         {/* Center */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-          <div
-            className="flex flex-col items-center justify-center rounded-full shadow-lg"
-            style={{
-              width: 80, height: 80,
-              background: `radial-gradient(circle at 38% 38%, ${PRIMARY_LIGHT}, ${PRIMARY})`,
-              boxShadow: `0 0 30px 10px ${PRIMARY}28`,
-            }}
-          >
-            <span className="text-white font-black text-[10px] text-center leading-tight px-2">{title}</span>
-          </div>
+        <div
+          className="absolute z-10 flex flex-col items-center justify-center rounded-full shadow-lg"
+          style={{
+            width: 80, height: 80,
+            top: cy - 40, left: cx - 40,
+            background: `radial-gradient(circle at 38% 38%, ${PRIMARY_LIGHT}, ${PRIMARY})`,
+            boxShadow: `0 0 30px 10px ${PRIMARY}28`,
+          }}
+        >
+          <span className="text-white font-black text-[10px] text-center leading-tight px-2">{title}</span>
         </div>
 
-        {/* Orbit nodes */}
+        {/* Orbit nodes — centered with absolute positioning */}
         {items.map((item, i) => {
           const angle = (i * 360) / items.length - 90;
           const rad = (angle * Math.PI) / 180;
-          const x = SIZE / 2 + orbitR * Math.cos(rad);
-          const y = SIZE / 2 + orbitR * Math.sin(rad);
+          const nx = cx + orbitR * Math.cos(rad);
+          const ny = cy + orbitR * Math.sin(rad);
           return (
             <motion.div
               key={i}
@@ -104,7 +105,7 @@ const SubSolarOverlay = ({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.06, type: "spring", stiffness: 200 }}
               className="absolute flex flex-col items-center"
-              style={{ left: x, top: y, transform: "translate(-50%, -50%)" }}
+              style={{ left: nx, top: ny, transform: "translate(-50%, -50%)" }}
             >
               <div
                 className="rounded-full flex items-center justify-center shadow-sm"
@@ -126,9 +127,9 @@ const SubSolarOverlay = ({
             const rad = (angle * Math.PI) / 180;
             return (
               <line key={i}
-                x1={SIZE / 2} y1={SIZE / 2}
-                x2={SIZE / 2 + orbitR * Math.cos(rad)}
-                y2={SIZE / 2 + orbitR * Math.sin(rad)}
+                x1={cx} y1={cy}
+                x2={cx + orbitR * Math.cos(rad)}
+                y2={cy + orbitR * Math.sin(rad)}
                 stroke={`${PRIMARY}22`} strokeWidth="1" strokeDasharray="3 3" />
             );
           })}

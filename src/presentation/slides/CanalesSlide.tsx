@@ -10,10 +10,6 @@ const channels = [
   { icon: Monitor,    es: "Banca en línea", en: "Online Banking", desc_es: "Web responsive", desc_en: "Responsive web" },
   { icon: Globe,      es: "API Open Banking", en: "Open Banking API", desc_es: "REST + OAuth2", desc_en: "REST + OAuth2" },
   { emoji: "💬", es: "WhatsApp Business", en: "WhatsApp Business", desc_es: "Consultas, pagos y alertas", desc_en: "Queries, payments & alerts" },
-  { emoji: "✈️", es: "Telegram Bot", en: "Telegram Bot", desc_es: "Notificaciones automatizadas", desc_en: "Automated notifications" },
-  { emoji: "📞", es: "Llamadas / IVR", en: "Calls / IVR", desc_es: "Centro de atención automático", desc_en: "Automated call center" },
-  { emoji: "📱", es: "SMS", en: "SMS", desc_es: "Alertas y confirmaciones", desc_en: "Alerts & confirmations" },
-  { emoji: "📧", es: "Email", en: "Email", desc_es: "Notificaciones transaccionales", desc_en: "Transactional notifications" },
 ];
 
 const mobileFeatures = [
@@ -60,10 +56,10 @@ const CanalesSlide = () => {
         </motion.div>
 
         <div className="grid grid-cols-2 gap-8">
-          {/* Channels list */}
+          {/* Left column: Channels + rotating carousel below */}
           <div>
             <p className="text-gray-400 text-xs uppercase tracking-widest mb-4">{t("Canales disponibles", "Available channels")}</p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 mb-5">
               {channels.map((ch, i) => (
                 <motion.div
                   key={i}
@@ -82,12 +78,9 @@ const CanalesSlide = () => {
                 </motion.div>
               ))}
             </div>
-          </div>
 
-          {/* Right column */}
-          <div>
-            {/* Rotating channel showcase */}
-            <div className="mb-5 rounded-2xl p-5 text-center" style={{ background: `${PRIMARY}08`, border: `1.5px solid ${PRIMARY}20` }}>
+            {/* Rotating channel showcase — below channels */}
+            <div className="rounded-2xl p-5 text-center" style={{ background: `${PRIMARY}08`, border: `1.5px solid ${PRIMARY}20` }}>
               <p className="text-gray-400 text-xs uppercase tracking-widest mb-3">{t("Comunicación en tiempo real", "Real-time communication")}</p>
               <div className="h-16 flex items-center justify-center overflow-hidden">
                 <AnimatePresence mode="wait">
@@ -116,7 +109,10 @@ const CanalesSlide = () => {
                 ))}
               </div>
             </div>
+          </div>
 
+          {/* Right column */}
+          <div>
             <p className="text-gray-400 text-xs uppercase tracking-widest mb-3">{t("Funcionalidades clave", "Key features")}</p>
             <div className="grid grid-cols-2 gap-3 mb-5">
               {mobileFeatures.map((f, i) => {
