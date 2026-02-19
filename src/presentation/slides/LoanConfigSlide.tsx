@@ -347,7 +347,7 @@ const TipoPagoZoom = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-// ── Sub-zoom: Modo de Cobro (Solar giratorio) ─────────────────────────────────
+// ── Sub-zoom: Modo de Cobro ───────────────────────────────────────────────────
 const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
   const [activeSection, setActiveSection] = useState<"canales" | "momentos" | "automatizacion" | "especiales">("canales");
   const sectionData = {
@@ -357,13 +357,9 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
     especiales: { label: "Eventos Especiales", items: cobro_especiales, color: PRIMARY },
   };
   const sec = sectionData[activeSection];
-  const centerSize = 80;
-  const orbitR = 120;
-  const svgSize = 420;
-  const cx = svgSize / 2;
-  const cy = svgSize / 2;
   const items = sec.items;
 
+  // Use a list-based layout instead of solar system for perfect centering
   return (
     <div className="absolute inset-0 z-50 flex flex-col overflow-hidden rounded-2xl shadow-2xl"
       style={{ background: "linear-gradient(135deg, #fff 0%, #fff5f6 100%)", border: `1.5px solid ${PRIMARY}22` }}>
@@ -389,69 +385,47 @@ const ModeoCobróZoom = ({ onClose }: { onClose: () => void }) => {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center p-3">
-        <p className="text-xs font-bold text-gray-700 mb-2">{sec.label}</p>
-        <div className="relative mx-auto" style={{ width: svgSize, height: svgSize }}>
-          {/* Orbit ring — static */}
-          <div className="absolute rounded-full"
-            style={{
-              width: orbitR * 2, height: orbitR * 2,
-              top: cy - orbitR, left: cx - orbitR,
-              border: `1.5px dashed ${sec.color}55`,
-            }} />
-
-          {/* Center */}
-          <div
-            className="absolute rounded-full flex flex-col items-center justify-center shadow-lg z-10"
-            style={{
-              width: centerSize, height: centerSize,
-              top: cy - centerSize / 2, left: cx - centerSize / 2,
-              background: sec.color,
-            }}>
-            <span className="text-white font-black text-[9px] text-center px-2 leading-tight">{sec.label}</span>
-          </div>
-
-          {/* Satellite nodes */}
-          {items.map((item, i) => {
-            const angle = (i * 360) / items.length - 90;
-            const rad = (angle * Math.PI) / 180;
-            const nx = cx + orbitR * Math.cos(rad);
-            const ny = cy + orbitR * Math.sin(rad);
-            return (
-              <motion.div
-                key={`${activeSection}-${i}`}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05, type: "spring", stiffness: 200 }}
-                className="absolute flex flex-col items-center"
-                style={{ left: nx, top: ny, transform: "translate(-50%, -50%)" }}
-              >
-                <div className="w-11 h-11 rounded-full flex items-center justify-center shadow-sm text-base bg-white"
-                  style={{ border: `2px solid ${sec.color}55` }}>
-                  {item.emoji}
-                </div>
-                <span className="text-[9px] text-gray-500 text-center leading-tight max-w-[64px] mt-0.5">
-                  {item.label}
-                </span>
-              </motion.div>
-            );
-          })}
-
-          {/* SVG connector lines */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none">
-            {items.map((_, i) => {
-              const angle = (i * 360) / items.length - 90;
-              const rad = (angle * Math.PI) / 180;
-              return (
-                <line key={i}
-                  x1={cx} y1={cy}
-                  x2={cx + orbitR * Math.cos(rad)}
-                  y2={cy + orbitR * Math.sin(rad)}
-                  stroke={`${sec.color}25`} strokeWidth="1" strokeDasharray="3 3" />
-              );
-            })}
-          </svg>
+      <div className="flex-1 flex flex-col items-center justify-center p-5 overflow-y-auto">
+        {/* Center label */}
+        <div
+          className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg mb-6 flex-shrink-0"
+          style={{ background: sec.color }}
+        >
+          <span className="text-white font-black text-[9px] text-center px-2 leading-tight">{sec.label}</span>
         </div>
+
+        {/* Items as a clean centered grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="w-full max-w-md"
+          >
+            <div className={`grid gap-2 ${items.length <= 3 ? "grid-cols-3" : items.length <= 6 ? "grid-cols-3" : "grid-cols-5"}`}>
+              {items.map((item, i) => (
+                <motion.div
+                  key={`${activeSection}-${i}`}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.04, type: "spring", stiffness: 200 }}
+                  className="flex flex-col items-center text-center p-3 rounded-xl bg-white border hover:shadow-md transition-shadow"
+                  style={{ borderColor: `${sec.color}30` }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-lg mb-1.5 bg-gray-50"
+                    style={{ border: `2px solid ${sec.color}40` }}
+                  >
+                    {item.emoji}
+                  </div>
+                  <span className="text-[10px] font-medium text-gray-600 leading-tight">{item.label}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
