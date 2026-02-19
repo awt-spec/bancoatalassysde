@@ -4,11 +4,11 @@ import { ChevronLeft, ChevronRight, X, Maximize2, Minimize2, Globe } from "lucid
 import { PresentationLangProvider, usePresentationLanguage } from "./hooks/usePresentationLanguage";
 import OperationalSequenceSlide from "./slides/OperationalSequenceSlide";
 import LoanConfigSlide from "./slides/LoanConfigSlide";
+import SubscriptionSlide from "./slides/SubscriptionSlide";
 import CanalesSlide from "./slides/CanalesSlide";
 import ReportingSlide from "./slides/ReportingSlide";
 import ComplianceSlide from "./slides/ComplianceSlide";
 import APISlide from "./slides/APISlide";
-import CoreBancarioSlide from "./slides/CoreBancarioSlide";
 
 type Direction = "left" | "right" | "zoom-in" | "zoom-out";
 
@@ -91,7 +91,7 @@ function PresentationInner({ onClose }: { onClose: () => void }) {
   const slides = [
     <OperationalSequenceSlide key="operacional" />,
     <LoanConfigSlide key="loanconfig" />,
-    <CoreBancarioSlide key="ecosistema" />,
+    <SubscriptionSlide key="suscripcion" />,
     <CanalesSlide key="canales" />,
     <ReportingSlide key="reporting" />,
     <ComplianceSlide key="compliance" />,
