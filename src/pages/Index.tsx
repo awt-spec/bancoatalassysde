@@ -28,7 +28,7 @@ const Index = () => {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen relative overflow-auto">
+    <div ref={containerRef} className="min-h-screen relative overflow-auto bg-background">
       <button
         onClick={toggleFullscreen}
         className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:opacity-90 transition-all"

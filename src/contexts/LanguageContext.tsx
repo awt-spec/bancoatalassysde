@@ -15,8 +15,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.about": "Nosotros",
     "nav.solutions": "Soluciones",
     "nav.clients": "Clientes",
-    "nav.contact": "Contacto",
-    "nav.cta": "Contáctanos",
+    "nav.contact": "Ecosistema SAF+",
     
     // Hero
     "hero.badge": "Más de 33 años de experiencia",
@@ -102,8 +101,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.about": "About",
     "nav.solutions": "Solutions",
     "nav.clients": "Clients",
-    "nav.contact": "Contact",
-    "nav.cta": "Contact Us",
+    "nav.contact": "SAF+ Ecosystem",
     
     // Hero
     "hero.badge": "Over 33 years of experience",
@@ -189,8 +187,7 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.about": "À propos",
     "nav.solutions": "Solutions",
     "nav.clients": "Clients",
-    "nav.contact": "Contact",
-    "nav.cta": "Contactez-nous",
+    "nav.contact": "Écosystème SAF+",
     
     // Hero
     "hero.badge": "Plus de 33 ans d'expérience",

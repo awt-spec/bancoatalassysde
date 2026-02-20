@@ -24,7 +24,7 @@ const Header = () => {
     { label: t("nav.about"), href: "#nosotros" },
     { label: t("nav.solutions"), href: "#soluciones" },
     { label: t("nav.clients"), href: "#clientes" },
-    { label: t("nav.contact"), href: "#contacto" },
+    { label: t("nav.contact"), href: "#ecosistema" },
   ];
 
   return (
@@ -58,9 +58,6 @@ const Header = () => {
             </a>
           ))}
           <LanguageSelector isScrolled={isScrolled} />
-          <Button variant="default" size="sm" className="ml-2">
-            {t("nav.cta")}
-          </Button>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -94,9 +91,6 @@ const Header = () => {
                 {link.label}
               </a>
             ))}
-            <Button variant="default" className="mt-2">
-              {t("nav.cta")}
-            </Button>
           </nav>
         </div>
       )}
